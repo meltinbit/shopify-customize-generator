@@ -27,7 +27,7 @@
 
 <script>
 export default {
-  name: 'SRadio',
+  name: 'SSelect',
   data() {
     return {
       newOption: {

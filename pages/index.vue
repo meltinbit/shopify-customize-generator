@@ -89,7 +89,35 @@
                             :def="sectionSetting.default" 
                             @input-default="sectionSetting.default = $event"
                             :options="sectionSetting.options"
-                            @input-options="pushRadioOptions(idx, $event)"
+                            @input-options="pushOptions(idx, $event)"
+                          />
+
+                          <SRange v-if="sectionSetting.type == 'range'" 
+                            :id="sectionSetting.id" 
+                            @input-id="sectionSetting.id = $event" 
+                            :min="sectionSetting.min" 
+                            @input-min="sectionSetting.min = $event"
+                            :max="sectionSetting.max" 
+                            @input-max="sectionSetting.max = $event"
+                            :step="sectionSetting.step" 
+                            @input-step="sectionSetting.step = $event"
+                            :unit="sectionSetting.unit" 
+                            @input-unit="sectionSetting.unit = $event"
+                            :label="sectionSetting.label" 
+                            @input-label="sectionSetting.label = $event"
+                            :def="sectionSetting.default" 
+                            @input-default="sectionSetting.default = $event"
+                          />
+
+                          <SSelect v-if="sectionSetting.type == 'select'" 
+                            :id="sectionSetting.id" 
+                            @input-id="sectionSetting.id = $event" 
+                            :label="sectionSetting.label" 
+                            @input-label="sectionSetting.label = $event"
+                            :def="sectionSetting.default" 
+                            @input-default="sectionSetting.default = $event"
+                            :options="sectionSetting.options"
+                            @input-options="pushOptions(idx, $event)"
                           />
                         </div>
                       </div>
@@ -145,14 +173,81 @@
 
                                 <div v-if="index == selectedElementInBlock" class="card">
                                   <div class="card-body">
-                                    <label class="form-label">ID</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="blockSetting.id" />
 
-                                    <label class="form-label">Label</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="blockSetting.label" />
+                                     <SText v-if="blockSetting.type == 'text'" 
+                                        :id="blockSetting.id" 
+                                        @input-id="blockSetting.id = $event" 
+                                        :label="blockSetting.label" 
+                                        @input-label="blockSetting.label = $event"
+                                        :def="blockSetting.default" 
+                                        @input-default="blockSetting.default = $event"
+                                      />
 
-                                    <label class="form-label">Default</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="blockSetting.default" />
+                                      <SCTextarea v-if="blockSetting.type == 'textarea'" 
+                                        :id="blockSetting.id" 
+                                        @input-id="blockSetting.id = $event" 
+                                        :label="blockSetting.label" 
+                                        @input-label="blockSetting.label = $event"
+                                        :def="blockSetting.default" 
+                                        @input-default="blockSetting.default = $event"
+                                      />
+
+                                      <SCheckbox v-if="blockSetting.type == 'checkbox'" 
+                                        :id="blockSetting.id" 
+                                        @input-id="blockSetting.id = $event" 
+                                        :label="blockSetting.label" 
+                                        @input-label="blockSetting.label = $event"
+                                        :def="blockSetting.default" 
+                                        @input-default="blockSetting.default = $event"
+                                      />
+
+                                      <SNumber v-if="blockSetting.type == 'number'" 
+                                        :id="blockSetting.id" 
+                                        @input-id="blockSetting.id = $event" 
+                                        :label="blockSetting.label" 
+                                        @input-label="blockSetting.label = $event"
+                                        :def="blockSetting.default" 
+                                        @input-default="blockSetting.default = $event"
+                                      />
+
+                                      <SRadio v-if="blockSetting.type == 'radio'" 
+                                        :id="blockSetting.id" 
+                                        @input-id="blockSetting.id = $event" 
+                                        :label="blockSetting.label" 
+                                        @input-label="blockSetting.label = $event"
+                                        :def="blockSetting.default" 
+                                        @input-default="blockSetting.default = $event"
+                                        :options="blockSetting.options"
+                                        @input-options="pushBlockOptions(idx, index, $event)"
+                                      />
+
+                                      <SRange v-if="blockSetting.type == 'range'" 
+                                        :id="blockSetting.id" 
+                                        @input-id="blockSetting.id = $event" 
+                                        :min="blockSetting.min" 
+                                        @input-min="blockSetting.min = $event"
+                                        :max="blockSetting.max" 
+                                        @input-max="blockSetting.max = $event"
+                                        :step="blockSetting.step" 
+                                        @input-step="blockSetting.step = $event"
+                                        :unit="blockSetting.unit" 
+                                        @input-unit="blockSetting.unit = $event"
+                                        :label="blockSetting.label" 
+                                        @input-label="blockSetting.label = $event"
+                                        :def="blockSetting.default" 
+                                        @input-default="blockSetting.default = $event"
+                                      />
+
+                                      <SSelect v-if="blockSetting.type == 'select'" 
+                                        :id="blockSetting.id" 
+                                        @input-id="blockSetting.id = $event" 
+                                        :label="blockSetting.label" 
+                                        @input-label="blockSetting.label = $event"
+                                        :def="blockSetting.default" 
+                                        @input-default="blockSetting.default = $event"
+                                        :options="blockSetting.options"
+                                        @input-options="pushBlockOptions(idx, index, $event)"
+                                      />
                                   </div>
                                 </div>
                               </div>
@@ -209,10 +304,21 @@ export default {
           default: ''
         },
         {
-          type: 'range'
+          type: 'range',
+          id: '',
+          min: '',
+          max: '',
+          step: '',
+          unit: '',
+          label: '',
+          default: ''
         },
         {
-          type: 'select'
+          type: 'select',
+          id: '',
+          label: '',
+          options: [],
+          default: ''
         },
         {
           type: 'text',
@@ -271,8 +377,11 @@ export default {
     removeElementInBlock(idx, index) {
       this.section.blocks[idx].settings.splice(index, 1);
     },
-    pushRadioOptions(idx, event) {
+    pushOptions(idx, event) {
       this.section.settings[idx].options.push(event);
+    },
+    pushBlockOptions(idx, index, event) {
+      this.section.blocks[idx].settings[index].options.push(event);
     }
   }
  

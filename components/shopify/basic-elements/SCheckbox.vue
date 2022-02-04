@@ -21,7 +21,6 @@ export default {
   },
   methods: {
     updateId(event) {
-      console.log(event.target.value)
       this.$emit('input-id', event.target.value)
     },
     updateLabel(event) {
