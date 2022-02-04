@@ -1,12 +1,6 @@
 <template>
   <div class="container p-5">
     <div class="row">
-      <!-- <div class="col-md-2">
-        <ul class="list-group">
-          <li v-for="(element, index) in basicElements" :key="index" @click="addElement(index)" class="list-group-item">{{ element.type }}</li>
-        </ul>
-      </div> -->
-
       <div class="col">
         <div class="card border-primary">
           <div class="card-header d-flex justify-content-between">
@@ -20,19 +14,19 @@
             <div class="card-body">
               <div class="mb-3">
                 <label>Name</label>
-                <input type="text" class="form-control" v-model="section.name">
+                <input type="text" class="form-control form-control-sm" v-model="section.name">
               </div>
               <div class="mb-3">
                 <label>Tag</label>
-                <input type="text" class="form-control" v-model="section.tag">
+                <input type="text" class="form-control form-control-sm" v-model="section.tag">
               </div>
               <div class="mb-3">
                 <label>Class</label>
-                <input type="text" class="form-control" v-model="section.class">
+                <input type="text" class="form-control form-control-sm" v-model="section.class">
               </div>
               <div class="mb-3">
                 <label>Limit</label>
-                <input type="number" min="1" max="20" step="1" class="form-control" v-model="section.limit">
+                <input type="number" min="1" max="20" step="1" class="form-control form-control-sm" v-model="section.limit">
               </div>
               
               <div v-if="section.settings.length" class="card border-primary mb-4">
@@ -51,14 +45,52 @@
 
                       <div v-if="idx == selectedElement" class="card">
                         <div class="card-body">
-                          <label class="form-label">ID</label>
-                          <input type="text" class="form-control form-control-sm" v-model="sectionSetting.id" />
+                          <SText v-if="sectionSetting.type == 'text'" 
+                            :id="sectionSetting.id" 
+                            @input-id="sectionSetting.id = $event" 
+                            :label="sectionSetting.label" 
+                            @input-label="sectionSetting.label = $event"
+                            :def="sectionSetting.default" 
+                            @input-default="sectionSetting.default = $event"
+                          />
 
-                          <label class="form-label">Label</label>
-                          <input type="text" class="form-control form-control-sm" v-model="sectionSetting.label" />
+                          <SCTextarea v-if="sectionSetting.type == 'textarea'" 
+                            :id="sectionSetting.id" 
+                            @input-id="sectionSetting.id = $event" 
+                            :label="sectionSetting.label" 
+                            @input-label="sectionSetting.label = $event"
+                            :def="sectionSetting.default" 
+                            @input-default="sectionSetting.default = $event"
+                          />
 
-                          <label class="form-label">Default</label>
-                          <input type="text" class="form-control form-control-sm" v-model="sectionSetting.default" />
+                          <SCheckbox v-if="sectionSetting.type == 'checkbox'" 
+                            :id="sectionSetting.id" 
+                            @input-id="sectionSetting.id = $event" 
+                            :label="sectionSetting.label" 
+                            @input-label="sectionSetting.label = $event"
+                            :def="sectionSetting.default" 
+                            @input-default="sectionSetting.default = $event"
+                          />
+
+                          <SNumber v-if="sectionSetting.type == 'number'" 
+                            :id="sectionSetting.id" 
+                            @input-id="sectionSetting.id = $event" 
+                            :label="sectionSetting.label" 
+                            @input-label="sectionSetting.label = $event"
+                            :def="sectionSetting.default" 
+                            @input-default="sectionSetting.default = $event"
+                          />
+
+                          <SRadio v-if="sectionSetting.type == 'radio'" 
+                            :id="sectionSetting.id" 
+                            @input-id="sectionSetting.id = $event" 
+                            :label="sectionSetting.label" 
+                            @input-label="sectionSetting.label = $event"
+                            :def="sectionSetting.default" 
+                            @input-default="sectionSetting.default = $event"
+                            :options="sectionSetting.options"
+                            @input-options="pushRadioOptions(idx, $event)"
+                          />
                         </div>
                       </div>
                     </div>
@@ -143,7 +175,7 @@
             Output Schema
           </div>
           <div class="card-body">
-            <pre><code v-if="section" class="text-white">{{ section}}</code></pre>
+            <pre><code v-if="section" class="text-white">{{ section }}</code></pre>
           </div>
         </div>
       </div>
@@ -158,13 +190,23 @@ export default {
     return {
       basicElements: [
         {
-          type: 'checkbox'
+          type: 'checkbox',
+          id: '',
+          label: '',
+          default: ''
         },
         {
-          type: 'number'
+          type: 'number',
+          id: '',
+          label: '',
+          default: ''
         },
         {
-          type: 'radio'
+          type: 'radio',
+          id: '',
+          label: '',
+          options: [],
+          default: ''
         },
         {
           type: 'range'
@@ -179,7 +221,10 @@ export default {
           default: ''
         },
         {
-          type: 'textarea'
+          type: 'textarea',
+          id: '',
+          label: '',
+          default: ''
         }
       ],
       section: {
@@ -225,6 +270,9 @@ export default {
     },
     removeElementInBlock(idx, index) {
       this.section.blocks[idx].settings.splice(index, 1);
+    },
+    pushRadioOptions(idx, event) {
+      this.section.settings[idx].options.push(event);
     }
   }
  

@@ -25,7 +25,11 @@ export default {
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
-  components: true,
+  components: [
+    // Equivalent to { path: '~/components' }
+    '~/components',
+    { path: '~/components/shopify/basic-elements', extensions: ['vue'] }
+  ],
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
