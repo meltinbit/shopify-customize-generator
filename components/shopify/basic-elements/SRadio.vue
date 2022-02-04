@@ -10,7 +10,7 @@
     <div v-for="(option, index) in options" :key="index" class="d-flex mb-3">
       <input type="text" placeholder="value" class="form-control form-control-sm mr-1" :value="option.value"> 
       <input type="text" placeholder="label" class="form-control form-control-sm" :value="option.label">
-      <!-- <button @click="addOption()" class="btn btn-secondary btn-sm">add</button> -->
+      <button @click="delOption(index)" class="btn btn-secondary btn-sm">del</button>
     </div>
     <div class="d-flex mb-3">
       <input type="text" placeholder="value" class="form-control form-control-sm mr-1" v-model="newOption.value"> 
@@ -19,7 +19,9 @@
     </div>
 
     <label class="form-label">Default</label>
-    <input type="text" class="form-control form-control-sm" :value="def" @input="updateDefault"   />
+    <select class="form-control" :value="def" @change="updateDefault">
+      <option v-for="(option, index) in options" :key="index" :value="option.value">{{option.label}}</option>
+    </select>
   </div>
 </template>
 
@@ -49,6 +51,7 @@ export default {
       this.$emit('input-label', event.target.value)
     },
     updateDefault(event) {
+      console.log(event.target.value)
       this.$emit('input-default', event.target.value)
     },
     addOption() {
@@ -60,6 +63,9 @@ export default {
         this.newOption.value = ''
         this.newOption.label = ''
       }
+    },
+    delOption(index) {
+      this.options.splice(index, 1)
     }
   }
 }
