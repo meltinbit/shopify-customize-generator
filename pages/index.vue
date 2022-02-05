@@ -1,5 +1,5 @@
 <template>
-  <div class="container p-5">
+  <div class="container-fluid p-5">
     <div class="row">
       <div class="col">
         <div class="card border-primary">
@@ -42,7 +42,7 @@
                         </div>
                         <div class="card-body">
                           <p @click="setSelectedElement(idx)">
-                            <img :src="'./all-elements/' + sectionSetting.type + '.png'" class="img-fluid" />
+                            <img :src="'./all-elements/' + sectionSetting.type + '.png'" class="img-fluid" style="max-width:300px;" />
                           </p>
                         </div>
                       </div>
@@ -139,8 +139,105 @@
                             @input-id="sectionSetting.id = $event" 
                             :label="sectionSetting.label" 
                             @input-label="sectionSetting.label = $event"
+                          />
+
+                          <SBlog v-if="sectionSetting.type == 'blog'" 
+                            :id="sectionSetting.id" 
+                            @input-id="sectionSetting.id = $event" 
+                            :label="sectionSetting.label" 
+                            @input-label="sectionSetting.label = $event"
+                          />
+
+                          <SCollection v-if="sectionSetting.type == 'collection'" 
+                            :id="sectionSetting.id" 
+                            @input-id="sectionSetting.id = $event" 
+                            :label="sectionSetting.label" 
+                            @input-label="sectionSetting.label = $event"
+                          />
+
+                          <SColor v-if="sectionSetting.type == 'color'" 
+                            :id="sectionSetting.id" 
+                            @input-id="sectionSetting.id = $event" 
+                            :label="sectionSetting.label" 
+                            @input-label="sectionSetting.label = $event"
                             :def="sectionSetting.default" 
                             @input-default="sectionSetting.default = $event"
+                          />
+
+                          <SColorBackground v-if="sectionSetting.type == 'color_background'" 
+                            :id="sectionSetting.id" 
+                            @input-id="sectionSetting.id = $event" 
+                            :label="sectionSetting.label" 
+                            @input-label="sectionSetting.label = $event"
+                            :def="sectionSetting.default" 
+                            @input-default="sectionSetting.default = $event"
+                          />
+
+                          <SFontPicker v-if="sectionSetting.type == 'font_picker'" 
+                            :id="sectionSetting.id" 
+                            @input-id="sectionSetting.id = $event" 
+                            :label="sectionSetting.label" 
+                            @input-label="sectionSetting.label = $event"
+                            :def="sectionSetting.default" 
+                            @input-default="sectionSetting.default = $event"
+                          />
+
+                          <SHtml v-if="sectionSetting.type == 'html'" 
+                            :id="sectionSetting.id" 
+                            @input-id="sectionSetting.id = $event" 
+                            :label="sectionSetting.label" 
+                            @input-label="sectionSetting.label = $event"
+                          />
+
+                           <SImagePicker v-if="sectionSetting.type == 'image_picker'" 
+                            :id="sectionSetting.id" 
+                            @input-id="sectionSetting.id = $event" 
+                            :label="sectionSetting.label" 
+                            @input-label="sectionSetting.label = $event"
+                          />
+
+                          <SLinkList v-if="sectionSetting.type == 'link_list'" 
+                            :id="sectionSetting.id" 
+                            @input-id="sectionSetting.id = $event" 
+                            :label="sectionSetting.label" 
+                            @input-label="sectionSetting.label = $event"
+                          />
+
+                          <SLiquid v-if="sectionSetting.type == 'liquid'" 
+                            :id="sectionSetting.id" 
+                            @input-id="sectionSetting.id = $event" 
+                            :label="sectionSetting.label" 
+                            @input-label="sectionSetting.label = $event"
+                            :def="sectionSetting.default" 
+                            @input-default="sectionSetting.default = $event"
+                          />
+
+                          <SPage v-if="sectionSetting.type == 'page'" 
+                            :id="sectionSetting.id" 
+                            @input-id="sectionSetting.id = $event" 
+                            :label="sectionSetting.label" 
+                            @input-label="sectionSetting.label = $event"
+                          />
+
+                          <SProduct v-if="sectionSetting.type == 'product'" 
+                            :id="sectionSetting.id" 
+                            @input-id="sectionSetting.id = $event" 
+                            :label="sectionSetting.label" 
+                            @input-label="sectionSetting.label = $event"
+                          />
+
+                          <SRichtext v-if="sectionSetting.type == 'richtext'" 
+                            :id="sectionSetting.id" 
+                            @input-id="sectionSetting.id = $event" 
+                            :label="sectionSetting.label" 
+                            @input-label="sectionSetting.label = $event"
+                          />
+
+                          <SUrl v-if="sectionSetting.type == 'url'" 
+                            :id="sectionSetting.id" 
+                            @input-id="sectionSetting.id = $event" 
+                            :label="sectionSetting.label" 
+                            @input-label="sectionSetting.label = $event"
                           />
                         </div>
                       </div>
@@ -177,7 +274,7 @@
                         </div>
                         <div class="mb-3">
                           <label>Type</label> 
-                          <input type="text" class="form-control form-control-sm" v-model="block.type">
+                          <input type="text" class="form-control form-control-sm" placeholder="choose the type you want" v-model="block.type">
                         </div>
 
                         <div v-if="block.settings.length" class="card border-secondary">
@@ -193,7 +290,7 @@
                                   </div>
                                   <div class="card-body">
                                     <p @click="setSelectedElementInBlock(index)">
-                                      <img :src="'./all-elements/' + blockSetting.type + '.png'" class="img-fluid" />
+                                      <img :src="'./all-elements/' + blockSetting.type + '.png'" class="img-fluid" style="max-width:300px;" />
                                     </p>
                                   </div>
                                 </div>
@@ -293,6 +390,105 @@
                                         @input-label="blockSetting.label = $event"
                                         :def="blockSetting.default" 
                                         @input-default="blockSetting.default = $event"
+                                      />
+
+                                      <SBlog v-if="blockSetting.type == 'blog'" 
+                                        :id="blockSetting.id" 
+                                        @input-id="blockSetting.id = $event" 
+                                        :label="blockSetting.label" 
+                                        @input-label="blockSetting.label = $event"
+                                      />
+
+                                      <SCollection v-if="blockSetting.type == 'collection'" 
+                                        :id="blockSetting.id" 
+                                        @input-id="blockSetting.id = $event" 
+                                        :label="blockSetting.label" 
+                                        @input-label="blockSetting.label = $event"
+                                      />
+
+                                      <SColor v-if="blockSetting.type == 'color'" 
+                                        :id="blockSetting.id" 
+                                        @input-id="blockSetting.id = $event" 
+                                        :label="blockSetting.label" 
+                                        @input-label="blockSetting.label = $event"
+                                        :def="blockSetting.default" 
+                                        @input-default="blockSetting.default = $event"
+                                      />
+
+                                      <SColorBackground v-if="blockSetting.type == 'color_background'" 
+                                        :id="blockSetting.id" 
+                                        @input-id="blockSetting.id = $event" 
+                                        :label="blockSetting.label" 
+                                        @input-label="blockSetting.label = $event"
+                                        :def="blockSetting.default" 
+                                        @input-default="blockSetting.default = $event"
+                                      />
+
+                                      <SFontPicker v-if="blockSetting.type == 'font_picker'" 
+                                        :id="blockSetting.id" 
+                                        @input-id="blockSetting.id = $event" 
+                                        :label="blockSetting.label" 
+                                        @input-label="blockSetting.label = $event"
+                                        :def="blockSetting.default" 
+                                        @input-default="blockSetting.default = $event"
+                                      />
+
+                                      <SHtml v-if="blockSetting.type == 'html'" 
+                                        :id="blockSetting.id" 
+                                        @input-id="blockSetting.id = $event" 
+                                        :label="blockSetting.label" 
+                                        @input-label="blockSetting.label = $event"
+                                      />
+
+                                      <SImagePicker v-if="blockSetting.type == 'image_picker'" 
+                                        :id="blockSetting.id" 
+                                        @input-id="blockSetting.id = $event" 
+                                        :label="blockSetting.label" 
+                                        @input-label="blockSetting.label = $event"
+                                      />
+
+                                      <SLinkList v-if="blockSetting.type == 'link_list'" 
+                                        :id="blockSetting.id" 
+                                        @input-id="blockSetting.id = $event" 
+                                        :label="blockSetting.label" 
+                                        @input-label="blockSetting.label = $event"
+                                      />
+
+                                      <SLiquid v-if="blockSetting.type == 'liquid'" 
+                                        :id="blockSetting.id" 
+                                        @input-id="blockSetting.id = $event" 
+                                        :label="blockSetting.label" 
+                                        @input-label="blockSetting.label = $event"
+                                        :def="blockSetting.default" 
+                                        @input-default="blockSetting.default = $event"
+                                      />
+
+                                      <SPage v-if="blockSetting.type == 'page'" 
+                                        :id="blockSetting.id" 
+                                        @input-id="blockSetting.id = $event" 
+                                        :label="blockSetting.label" 
+                                        @input-label="blockSetting.label = $event"
+                                      />
+
+                                      <SProduct v-if="blockSetting.type == 'product'" 
+                                        :id="blockSetting.id" 
+                                        @input-id="blockSetting.id = $event" 
+                                        :label="blockSetting.label" 
+                                        @input-label="blockSetting.label = $event"
+                                      />
+
+                                      <SRichtext v-if="blockSetting.type == 'richtext'" 
+                                        :id="blockSetting.id" 
+                                        @input-id="blockSetting.id = $event" 
+                                        :label="blockSetting.label" 
+                                        @input-label="blockSetting.label = $event"
+                                      />
+
+                                      <SUrl v-if="blockSetting.type == 'url'" 
+                                        :id="blockSetting.id" 
+                                        @input-id="blockSetting.id = $event" 
+                                        :label="blockSetting.label" 
+                                        @input-label="blockSetting.label = $event"
                                       />
                                   </div>
                                 </div>
