@@ -7,7 +7,9 @@
             Section
             <div>
               <b-dropdown text="Add Setting" size="sm">
-                <b-dropdown-item v-for="(element, index) in basicElements" :key="index" @click="addElementToSection(index)">{{ element.type }}</b-dropdown-item>
+                <b-dropdown-item v-for="(basicElement, index) in basicElements" :key="index" @click="addElementToSection(index, 'basic')">{{ basicElement.type }}</b-dropdown-item>
+                <li><hr class="dropdown-divider"></li>
+                <b-dropdown-item v-for="(specializedElement, index) in specializedElements" :key="index" @click="addElementToSection(index, 'specialized')">{{ specializedElement.type }}</b-dropdown-item>
               </b-dropdown>
             </div>
           </div>
@@ -40,7 +42,7 @@
                         </div>
                         <div class="card-body">
                           <p @click="setSelectedElement(idx)">
-                            <img :src="'./basic_elements/' + sectionSetting.type + '.png'" class="img-fluid" />
+                            <img :src="'./all-elements/' + sectionSetting.type + '.png'" class="img-fluid" />
                           </p>
                         </div>
                       </div>
@@ -121,6 +123,15 @@
                             :options="sectionSetting.options"
                             @input-options="pushOptions(idx, $event)"
                           />
+
+                          <SArticle v-if="sectionSetting.type == 'article'" 
+                            :id="sectionSetting.id" 
+                            @input-id="sectionSetting.id = $event" 
+                            :label="sectionSetting.label" 
+                            @input-label="sectionSetting.label = $event"
+                            :def="sectionSetting.default" 
+                            @input-default="sectionSetting.default = $event"
+                          />
                         </div>
                       </div>
                     </div>
@@ -144,7 +155,9 @@
                       <div class="card-header d-flex justify-content-between">
                         Block {{idx}}
                         <b-dropdown text="Add Setting" size="sm">
-                          <b-dropdown-item v-for="(element, index) in basicElements" :key="index" @click="addSettingToBlock(idx, index)">{{ element.type }}</b-dropdown-item>
+                          <b-dropdown-item v-for="(basicElement, index) in basicElements" :key="index" @click="addSettingToBlock(idx, index, 'basic')">{{ basicElement.type }}</b-dropdown-item>
+                          <li><hr class="dropdown-divider"></li>
+                          <b-dropdown-item v-for="(specializedElement, index) in specializedElements" :key="index" @click="addSettingToBlock(idx, index, 'specialized')">{{ specializedElement.type }}</b-dropdown-item>
                         </b-dropdown>
                       </div>
                       <div class="card-body">
@@ -170,7 +183,7 @@
                                   </div>
                                   <div class="card-body">
                                     <p @click="setSelectedElementInBlock(index)">
-                                      <img :src="'./basic_elements/' + blockSetting.type + '.png'" class="img-fluid" />
+                                      <img :src="'./all-elements/' + blockSetting.type + '.png'" class="img-fluid" />
                                     </p>
                                   </div>
                                 </div>
@@ -251,6 +264,15 @@
                                         @input-default="blockSetting.default = $event"
                                         :options="blockSetting.options"
                                         @input-options="pushBlockOptions(idx, index, $event)"
+                                      />
+
+                                      <SArticle v-if="blockSetting.type == 'article'" 
+                                        :id="blockSetting.id" 
+                                        @input-id="blockSetting.id = $event" 
+                                        :label="blockSetting.label" 
+                                        @input-label="blockSetting.label = $event"
+                                        :def="blockSetting.default" 
+                                        @input-default="blockSetting.default = $event"
                                       />
                                   </div>
                                 </div>
@@ -337,6 +359,98 @@ export default {
           default: ''
         }
       ],
+      specializedElements: [
+        {
+          type: "article",
+          id: "",
+          label: ""
+        },
+        {
+          "type": "blog",
+          "id": "blog",
+          "label": "Blog"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "color",
+          "id": "body_text",
+          "label": "Body text",
+          "default": "#000000"
+        },
+        {
+          "type": "color_background",
+          "id": "background",
+          "label": "Background",
+          "default": "linear-gradient(#ffffff, #000000)"
+        },
+        {
+          "type": "font_picker",
+          "id": "heading_font",
+          "label": "Heading font",
+          "default": "helvetica_n4"
+        },
+        {
+          "type": "html",
+          "id": "video_embed",
+          "label": "Video embed"
+        },
+        {
+          "type": "image_picker",
+          "id": "logo_image",
+          "label": "Logo image"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu"
+        },
+        {
+          "type": "liquid",
+          "id": "message",
+          "label": "Message",
+          "default": "Hello , welcome to our shop."
+        },
+        {
+          "type": "page",
+          "id": "page",
+          "label": "Page"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "richtext",
+          "id": "paragraph",
+          "label": "Paragraph"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        },
+        {
+          "type": "video_url",
+          "id": "product_description_video",
+          "label": "Product description video",
+          "accept": [
+            "youtube",
+            "vimeo"
+          ]
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_payment_button",
+          "label": "Show dynamic checkout button",
+          "info": "Each customer will see their preferred payment method from those available on your store, such as PayPal or Apple Pay. [Learn more](https://help.shopify.com/manual/online-store/themes/dynamic-checkout)",
+          "default": true
+        }
+      ],
       section: {
         name: '',
         tag: 'div',
@@ -357,8 +471,13 @@ export default {
     }
   },
   methods: {
-    addElementToSection(idx) {
-      this.section.settings.push(JSON.parse(JSON.stringify(this.basicElements[idx])))
+    addElementToSection(idx, type) {
+      if(type == 'basic') {
+        this.section.settings.push(JSON.parse(JSON.stringify(this.basicElements[idx])))
+      }
+      if(type == 'specialized') {
+        this.section.settings.push(JSON.parse(JSON.stringify(this.specializedElements[idx])))
+      }
       this.selectedElement = this.section.settings.length - 1
     },
     setSelectedElement(idx) {
@@ -373,9 +492,13 @@ export default {
     setSelectedElementInBlock(idx) {
       this.selectedElementInBlock = idx
     },
-    addSettingToBlock(idx, index) {
-      console.log(idx, index)
-      this.section.blocks[idx].settings.push(JSON.parse(JSON.stringify(this.basicElements[index])))
+    addSettingToBlock(idx, index, type) {
+      if(type == 'basic') {
+        this.section.blocks[idx].settings.push(JSON.parse(JSON.stringify(this.basicElements[index])))
+      }
+      if(type == 'specialized') {
+        this.section.blocks[idx].settings.push(JSON.parse(JSON.stringify(this.specializedElements[index])))
+      }
       this.selectedElementInBlock = this.section.blocks[idx].settings.length - 1
     },
     removeElementInBlock(idx, index) {
