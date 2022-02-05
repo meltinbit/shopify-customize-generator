@@ -49,6 +49,16 @@
 
                       <div v-if="idx == selectedElement" class="card">
                         <div class="card-body">
+                          <SHeader v-if="sectionSetting.type == 'header'" 
+                            :content="sectionSetting.content" 
+                            @input-content="sectionSetting.content = $event" 
+                          />
+
+                          <SParagraph v-if="sectionSetting.type == 'paragraph'" 
+                            :content="sectionSetting.content" 
+                            @input-content="sectionSetting.content = $event" 
+                          />
+
                           <SText v-if="sectionSetting.type == 'text'" 
                             :id="sectionSetting.id" 
                             @input-id="sectionSetting.id = $event" 
@@ -191,6 +201,16 @@
                                 <div v-if="index == selectedElementInBlock" class="card">
                                   <div class="card-body">
 
+                                    <SHeader v-if="blockSetting.type == 'header'" 
+                                        :content="blockSetting.content" 
+                                        @input-content="blockSetting.content = $event" 
+                                      />
+
+                                      <SParagraph v-if="blockSetting.type == 'paragraph'" 
+                                        :content="blockSetting.content" 
+                                        @input-content="blockSetting.content = $event" 
+                                      />
+
                                      <SText v-if="blockSetting.type == 'text'" 
                                         :id="blockSetting.id" 
                                         @input-id="blockSetting.id = $event" 
@@ -310,6 +330,14 @@ export default {
   data() {
     return {
       basicElements: [
+        {
+          type: 'header',
+          content: ''
+        },
+        {
+          type: 'paragraph',
+          content: ''
+        },
         {
           type: 'checkbox',
           id: '',
