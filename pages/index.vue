@@ -39,7 +39,9 @@
                           <a href="#" class="" aria-label="Close" @click="removeElement(idx)">remove</a>
                         </div>
                         <div class="card-body">
-                          <p @click="setSelectedElement(idx)">{{sectionSetting.type}}</p>
+                          <p @click="setSelectedElement(idx)">
+                            <img :src="'./basic_elements/' + sectionSetting.type + '.png'" class="img-fluid" />
+                          </p>
                         </div>
                       </div>
 
@@ -167,7 +169,9 @@
                                     <a href="#" class="" aria-label="Close" @click="removeElementInBlock(idx, index)">remove</a>
                                   </div>
                                   <div class="card-body">
-                                    <p @click="setSelectedElementInBlock(index)">{{blockSetting.type}}</p>
+                                    <p @click="setSelectedElementInBlock(index)">
+                                      <img :src="'./basic_elements/' + blockSetting.type + '.png'" class="img-fluid" />
+                                    </p>
                                   </div>
                                 </div>
 
