@@ -42,7 +42,7 @@
                         </div>
                         <div class="card-body">
                           <p @click="setSelectedElement(idx)">
-                            <img :src="'./all-elements/' + sectionSetting.type + '.png'" class="img-fluid" style="max-width:300px;" />
+                            <img :src="'./all-elements/' + sectionSetting.type + '.png'" class="img-fluid" />
                           </p>
                         </div>
                       </div>
@@ -290,7 +290,7 @@
                                   </div>
                                   <div class="card-body">
                                     <p @click="setSelectedElementInBlock(index)">
-                                      <img :src="'./all-elements/' + blockSetting.type + '.png'" class="img-fluid" style="max-width:300px;" />
+                                      <img :src="'./all-elements/' + blockSetting.type + '.png'" class="img-fluid" />
                                     </p>
                                   </div>
                                 </div>
@@ -738,3 +738,13 @@ export default {
  
 }
 </script>
+
+<style scoped>
+img {
+  max-width: 300px;
+}
+
+img:hover {
+  cursor: pointer;
+}
+</style>
