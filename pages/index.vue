@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid p-5">
+  <div id="main" class="container-fluid p-5">
     <div class="row">
       <div class="col">
         <div class="card border-primary">
@@ -68,7 +68,7 @@
                             @input-default="sectionSetting.default = $event"
                           />
 
-                          <SCTextarea v-if="sectionSetting.type == 'textarea'" 
+                          <STextarea v-if="sectionSetting.type == 'textarea'" 
                             :id="sectionSetting.id" 
                             @input-id="sectionSetting.id = $event" 
                             :label="sectionSetting.label" 
@@ -317,7 +317,7 @@
                                         @input-default="blockSetting.default = $event"
                                       />
 
-                                      <SCTextarea v-if="blockSetting.type == 'textarea'" 
+                                      <STextarea v-if="blockSetting.type == 'textarea'" 
                                         :id="blockSetting.id" 
                                         @input-id="blockSetting.id = $event" 
                                         :label="blockSetting.label" 
@@ -528,151 +528,177 @@ export default {
       basicElements: [
         {
           type: 'header',
-          content: ''
+          content: 'Header text'
         },
         {
           type: 'paragraph',
-          content: ''
+          content: 'Paragraph text'
         },
         {
           type: 'checkbox',
-          id: '',
-          label: '',
-          default: ''
+          id: 'checkbox',
+          label: 'Checkbox',
+          default: true
         },
         {
           type: 'number',
-          id: '',
-          label: '',
-          default: ''
+          id: 'number',
+          label: 'Number',
+          default: 10
         },
         {
           type: 'radio',
-          id: '',
-          label: '',
-          options: [],
-          default: ''
+          id: 'radio',
+          label: 'Radio',
+          options: [
+            {
+              value: 'left',
+              label: 'Left',
+            },
+            {
+              value: 'center',
+              label: 'Center',
+            },
+            {
+              value: 'right',
+              label: 'Right',
+            }
+          ],
+          default: 'center'
         },
         {
           type: 'range',
-          id: '',
-          min: '',
-          max: '',
-          step: '',
-          unit: '',
-          label: '',
-          default: ''
+          id: 'range',
+          min: 10,
+          max: 50,
+          step: 1,
+          unit: 'px',
+          label: 'Range',
+          default: 15 
         },
         {
           type: 'select',
-          id: '',
-          label: '',
-          options: [],
-          default: ''
+          id: 'select',
+          label: 'Select',
+          options: [
+            {
+              "value": "top",
+              "label": "Top"
+            },
+            {
+              "value": "middle",
+              "label": "Middle"
+            },
+            {
+              "value": "bottom",
+              "label": "Bottom"
+            }
+          ],
+          default: 'middle'
         },
         {
           type: 'text',
-          id: '',
-          label: '',
-          default: ''
+          id: 'text',
+          label: 'Text',
+          default: 'This is text input'
         },
         {
           type: 'textarea',
-          id: '',
-          label: '',
-          default: ''
+          id: 'textarea',
+          label: 'Textarea',
+          default: 'This is a textarea'
         }
       ],
       specializedElements: [
         {
           type: "article",
-          id: "",
-          label: ""
+          id: "article",
+          label: "Article"
         },
         {
-          "type": "blog",
-          "id": "blog",
-          "label": "Blog"
+          type: "blog",
+          id: "blog",
+          label: "Blog"
         },
         {
-          "type": "collection",
-          "id": "collection",
-          "label": "Collection"
+          type: "collection",
+          id: "collection",
+          label: "Collection"
         },
         {
-          "type": "color",
-          "id": "body_text",
-          "label": "Body text",
-          "default": "#000000"
+          type: "color",
+          id: "body_text",
+          label: "Body text",
+          default: "#000000"
         },
         {
-          "type": "color_background",
-          "id": "background",
-          "label": "Background",
-          "default": "linear-gradient(#ffffff, #000000)"
+          type: "color_background",
+          id: "background",
+          label: "Background",
+          default: "linear-gradient(#ffffff, #000000)"
         },
         {
-          "type": "font_picker",
-          "id": "heading_font",
-          "label": "Heading font",
-          "default": "helvetica_n4"
+          type: "font_picker",
+          id: "heading_font",
+          label: "Heading font",
+          default: "helvetica_n4"
         },
         {
-          "type": "html",
-          "id": "video_embed",
-          "label": "Video embed"
+          type: "html",
+          id: "video_embed",
+          label: "Video embed"
         },
         {
-          "type": "image_picker",
-          "id": "logo_image",
-          "label": "Logo image"
+          type: "image_picker",
+          id: "logo_image",
+          label: "Logo image"
         },
         {
-          "type": "link_list",
-          "id": "menu",
-          "label": "Menu"
+          type: "link_list",
+          id: "menu",
+          label: "Menu"
         },
         {
-          "type": "liquid",
-          "id": "message",
-          "label": "Message",
-          "default": "Hello , welcome to our shop."
+          type: "liquid",
+          id: "message",
+          label: "Message",
+          default: "Hello , welcome to our shop."
         },
         {
-          "type": "page",
-          "id": "page",
-          "label": "Page"
+          type: "page",
+          id: "page",
+          label: "Page"
         },
         {
-          "type": "product",
-          "id": "product",
-          "label": "Product"
+          type: "product",
+          id: "product",
+          label: "Product"
         },
         {
-          "type": "richtext",
-          "id": "paragraph",
-          "label": "Paragraph"
+          type: "richtext",
+          id: "paragraph",
+          label: "Paragraph"
         },
         {
-          "type": "url",
-          "id": "button_link",
-          "label": "Button link"
+          type: "url",
+          id: "button_link",
+          label: "Button link"
         },
         {
-          "type": "video_url",
-          "id": "product_description_video",
-          "label": "Product description video",
-          "accept": [
-            "youtube",
-            "vimeo"
+          type: "video_url",
+          id: "product_description_video",
+          label: "Product description video",
+          accept: [
+            'youtube',
+            'vimeo'
           ]
         },
         {
-          "type": "checkbox",
-          "id": "enable_payment_button",
-          "label": "Show dynamic checkout button",
-          "info": "Each customer will see their preferred payment method from those available on your store, such as PayPal or Apple Pay. [Learn more](https://help.shopify.com/manual/online-store/themes/dynamic-checkout)",
-          "default": true
+          type: "checkbox",
+          id: "enable_payment_button",
+          label: "Show dynamic checkout button",
+          info: "Each customer will see their preferred payment method from those available on your store, such as PayPal or Apple Pay. [Learn more](https://help.shopify.com/manual/online-store/themes/dynamic-checkout)",
+          default: true
         }
       ],
       section: {
@@ -740,6 +766,10 @@ export default {
 </script>
 
 <style scoped>
+#main {
+  font-size: .9rem;
+}
+
 img {
   max-width: 300px;
 }
