@@ -51,6 +51,39 @@
           {{ element.type }}
         </div>
       </draggable>
+
+      <h3>Blocks</h3>
+      <draggable
+        :list="section.blocks"
+        class="list-group"
+        ghost-class="ghost"
+        :move="checkMove"
+        @start="dragging = true"
+        @end="dragging = false"
+      >
+        <div
+          class="list-group-item"
+          v-for="(element, index) in section.blocks"
+          :key="index"
+        >
+          {{ element.name }}
+          <h4>Settings</h4>
+          <draggable
+            class="dragArea list-group"
+            :list="section.blocks[index].settings"
+            group="sectionSettings"
+            @change="log"
+          >
+            <div
+              class="list-group-item"
+              v-for="(element, index) in section.blocks[index].settings"
+              :key="index"
+            >
+              {{ element.type }}
+            </div>
+          </draggable>
+        </div>
+      </draggable>
     </div>
 
     <!-- <rawDisplayer class="col-3" :value="list1" title="List 1" /> -->
@@ -261,7 +294,18 @@ export default {
           }
         ],
         max_blocks: 16,
-        blocks: [],
+        blocks: [
+          {
+            "name": "block 1",
+            "type": "",
+            "settings": []
+          },
+          {
+            "name": "block 2",
+            "type": "",
+            "settings": []
+          }
+        ],
         templates: []
       }
     };
