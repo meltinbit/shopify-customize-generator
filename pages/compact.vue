@@ -21,7 +21,7 @@
 
     <div class="col-md-6">
       <div class="card">
-        <div class="card-header">Section</div>
+        <div class="card-header"><strong>Section</strong></div>
         <div class="card-body">
           <!--SECTION -->
           <b-input-group size="sm" prepend="Name" class="mb-3"> 
@@ -42,7 +42,7 @@
 
           <!-- SECTION SETTINGS -->
           <div class="card mb-3">
-            <div class="card-header"><b-icon-gear-fill></b-icon-gear-fill>&nbsp;Settings ({{section.settings.length}})</div>
+            <div class="card-header"><b-icon-gear-fill></b-icon-gear-fill>&nbsp;<strong>Settings ({{section.settings.length}})</strong></div>
             <div class="card-body">
               <draggable
                 class="dragArea list-group"
@@ -55,8 +55,11 @@
                   v-for="(element, indexSetting) in section.settings"
                   :key="indexSetting"
                 >
-                  <span>{{ element.type }}</span>
-                  <a href="#" @click="removeSetting(indexSetting)"><b-icon-x></b-icon-x></a>
+                  <span>
+                    <b-icon-arrows-move></b-icon-arrows-move>
+                    {{ element.type }}
+                  </span>
+                  <a href="#" @click="removeSetting(indexSetting)"><b-icon-x font-scale="1.2"></b-icon-x></a>
                 </div>
               </draggable>
             </div>
@@ -65,8 +68,8 @@
           <!-- SECTION BLOCKS -->
           <div class="card">
             <div class="card-header d-flex justify-content-between align-items-start">
-              <span><b-icon-grid></b-icon-grid>&nbsp;Blocks ({{section.blocks.length}})</span>
-              <a href="#" @click="addBlock()" class=""><b-icon-plus></b-icon-plus></a>
+              <span><b-icon-grid></b-icon-grid>&nbsp;<strong>Blocks ({{section.blocks.length}})</strong></span>
+              <a href="#" @click="addBlock()" class=""><b-icon-plus font-scale="1.5"></b-icon-plus></a>
             </div>
             <div class="card-body">
               <draggable
@@ -82,10 +85,10 @@
                   :key="indexBlock"
                 >
 
-                <div class="card mb-3">
+                <div class="card block mb-3">
                   <div class="card-header d-flex justify-content-between align-items-start">
-                    <span><b-icon-stop-fill></b-icon-stop-fill>&nbsp;{{ block.type }}</span>
-                    <a href="#" @click="removeBlock(indexBlock)" class=""><b-icon-x></b-icon-x></a>
+                    <span><b-icon-arrows-move></b-icon-arrows-move>&nbsp;<strong>Block <span v-if="block.name">{{ block.name }}</span></strong></span>
+                    <a href="#" @click="removeBlock(indexBlock)" class=""><b-icon-x font-scale="1.2"></b-icon-x></a>
                   </div>
                   <div class="card-body">
                     <b-input-group size="sm" prepend="Name" class="mb-3"> 
@@ -355,4 +358,15 @@ export default {
   }
 };
 </script>
-<style scoped></style>
+<style scoped>
+a:link,
+a:visited {
+  color: black;
+}
+
+
+.block:hover,
+.list-group-item:hover {
+  cursor: pointer;
+}
+</style>
