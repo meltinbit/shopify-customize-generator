@@ -261,6 +261,7 @@
                     <div class="card border-secondary mb-4">
                       <div class="card-header d-flex justify-content-between">
                         Block {{idx}}
+                        <a href="#" class="" aria-label="Close" @click="removeBlock(idx)">remove</a>
                         <b-dropdown text="Add Setting" size="sm">
                           <b-dropdown-item v-for="(basicElement, index) in basicElements" :key="index" @click="addSettingToBlock(idx, index, 'basic')">{{ basicElement.type }}</b-dropdown-item>
                           <li><hr class="dropdown-divider"></li>
@@ -738,6 +739,9 @@ export default {
     },
     addBlock() {
       this.section.blocks.push(JSON.parse(JSON.stringify(this.block)))
+    },
+    removeBlock(idx) {
+      this.section.blocks.splice(idx, 1);
     },
     setSelectedElementInBlock(idx) {
       this.selectedElementInBlock = idx
