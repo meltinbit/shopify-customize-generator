@@ -43,6 +43,10 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
   ],
+  bootstrapVue: {
+    // Install the `IconsPlugin` plugin (in addition to `BootstrapVue` plugin)
+    icons: true
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},

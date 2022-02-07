@@ -1,29 +1,323 @@
 <template>
-  <section>
-    <div class="section-settings">
-      <Container @drop="onDrop">            
-        <Draggable v-for="item in items" :key="item.id">
-          <div class="draggable-item section-setting">
-            {{item}}
-          </div>
-        </Draggable>
-      </Container>
+ <div class="container-fluid p-3">
+  <div class="row">
+    <div class="col-md-3">
+      <h3>Elements</h3>
+      <draggable
+        class="dragArea list-group-flush"
+        :list="allElements"
+        :group="{ name: 'sectionSettings', pull: 'clone', put: false }"
+        @change="log"
+      >
+        <div
+          class="list-group-item"
+          v-for="(element, index) in allElements"
+          :key="index"
+        >
+          {{ element.type }}
+        </div>
+      </draggable>
     </div>
-  </section>
 
-  
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">Section</div>
+        <div class="card-body">
+          <!--SECTION -->
+          <b-input-group size="sm" prepend="Name" class="mb-3"> 
+            <b-form-input v-model="section.name"></b-form-input>
+          </b-input-group>
+
+          <b-input-group size="sm" prepend="Tag" class="mb-3">
+            <b-form-input v-model="section.tag"></b-form-input>
+          </b-input-group>
+
+          <b-input-group size="sm" prepend="Class" class="mb-3">
+            <b-form-input v-model="section.class"></b-form-input>
+          </b-input-group>
+
+          <b-input-group size="sm" prepend="Limit" class="mb-3">
+            <b-form-input v-model="section.limit" type="number" min="1" max=20></b-form-input>
+          </b-input-group>
+
+          <!-- SECTION SETTINGS -->
+          <div class="card mb-3">
+            <div class="card-header"><b-icon-gear-fill></b-icon-gear-fill>&nbsp;Settings ({{section.settings.length}})</div>
+            <div class="card-body">
+              <draggable
+                class="dragArea list-group"
+                :list="section.settings"
+                group="sectionSettings"
+                @change="log"
+              >
+                <div
+                  class="list-group-item d-flex justify-content-between align-items-start"
+                  v-for="(element, indexSetting) in section.settings"
+                  :key="indexSetting"
+                >
+                  <span>{{ element.type }}</span>
+                  <a href="#" @click="removeSetting(indexSetting)"><b-icon-x></b-icon-x></a>
+                </div>
+              </draggable>
+            </div>
+          </div>
+          
+          <!-- SECTION BLOCKS -->
+          <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-start">
+              <span><b-icon-grid></b-icon-grid>&nbsp;Blocks ({{section.blocks.length}})</span>
+              <a href="#" @click="addBlock()" class=""><b-icon-plus></b-icon-plus></a>
+            </div>
+            <div class="card-body">
+              <draggable
+                :list="section.blocks"
+                class="list-group"
+                ghost-class="ghost"
+                @start="dragging = true"
+                @end="dragging = false"
+              >
+                <div
+                  class=""
+                  v-for="(block, indexBlock) in section.blocks"
+                  :key="indexBlock"
+                >
+
+                <div class="card mb-3">
+                  <div class="card-header d-flex justify-content-between align-items-start">
+                    <span><b-icon-stop-fill></b-icon-stop-fill>&nbsp;{{ block.type }}</span>
+                    <a href="#" @click="removeBlock(indexBlock)" class=""><b-icon-x></b-icon-x></a>
+                  </div>
+                  <div class="card-body">
+                    <b-input-group size="sm" prepend="Name" class="mb-3"> 
+                      <b-form-input v-model="block.name"></b-form-input>
+                    </b-input-group>
+                    <b-input-group size="sm" prepend="Type" class="mb-3"> 
+                      <b-form-input v-model="block.type"></b-form-input>
+                    </b-input-group>
+                    <!-- SECTION BLOCK SETTINGS -->
+                    <div class="card">
+                      <div class="card-header"><b-icon-gear-fill></b-icon-gear-fill>&nbsp;Settings ({{section.blocks[indexBlock].settings.length}})</div>
+                      <div class="card-body">
+                        <draggable
+                          class="dragArea list-group"
+                          :list="section.blocks[indexBlock].settings"
+                          group="sectionSettings"
+                          @change="log"
+                        >
+                          <div
+                            class="list-group-item d-flex justify-content-between align-items-start"
+                            v-for="(blockSetting, indexBlockSetting) in section.blocks[indexBlock].settings"
+                            :key="indexBlockSetting"
+                          >
+                            <span>{{ blockSetting.type }}</span>
+                            <a href="#" @click="removeBlockSetting(indexBlock, indexBlockSetting)"><b-icon-x></b-icon-x></a>
+                          </div>
+                        </draggable>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                </div>
+              </draggable>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <pre><code v-if="section" class="">{{ section }}</code></pre>
+    </div>
+  </div>
+</div>
 </template>
 
 <script>
-import { Container, Draggable } from "vue-smooth-dnd"
-import { arrayMoveImmutable } from 'array-move'
+import draggable from "vuedraggable";
+import rawDisplayer from "vuedraggable";
 
 export default {
-  components: { Container, Draggable },
+  name: "clone",
+  display: "Clone",
+  order: 2,
+  components: {
+    draggable,
+    rawDisplayer
+  },
   data() {
     return {
-      items: [
-        1,2,3,4,5
+      allElements: [
+        {
+          type: 'header',
+          content: 'Header text'
+        },
+        {
+          type: 'paragraph',
+          content: 'Paragraph text'
+        },
+        {
+          type: 'checkbox',
+          id: 'checkbox',
+          label: 'Checkbox',
+          default: true
+        },
+        {
+          type: 'number',
+          id: 'number',
+          label: 'Number',
+          default: 10
+        },
+        {
+          type: 'radio',
+          id: 'radio',
+          label: 'Radio',
+          options: [
+            {
+              value: 'left',
+              label: 'Left',
+            },
+            {
+              value: 'center',
+              label: 'Center',
+            },
+            {
+              value: 'right',
+              label: 'Right',
+            }
+          ],
+          default: 'center'
+        },
+        {
+          type: 'range',
+          id: 'range',
+          min: 10,
+          max: 50,
+          step: 1,
+          unit: 'px',
+          label: 'Range',
+          default: 15 
+        },
+        {
+          type: 'select',
+          id: 'select',
+          label: 'Select',
+          options: [
+            {
+              "value": "top",
+              "label": "Top"
+            },
+            {
+              "value": "middle",
+              "label": "Middle"
+            },
+            {
+              "value": "bottom",
+              "label": "Bottom"
+            }
+          ],
+          default: 'middle'
+        },
+        {
+          type: 'text',
+          id: 'text',
+          label: 'Text',
+          default: 'This is text input'
+        },
+        {
+          type: 'textarea',
+          id: 'textarea',
+          label: 'Textarea',
+          default: 'This is a textarea'
+        },
+        {
+          type: "article",
+          id: "article",
+          label: "Article"
+        },
+        {
+          type: "blog",
+          id: "blog",
+          label: "Blog"
+        },
+        {
+          type: "collection",
+          id: "collection",
+          label: "Collection"
+        },
+        {
+          type: "color",
+          id: "body_text",
+          label: "Body text",
+          default: "#000000"
+        },
+        {
+          type: "color_background",
+          id: "background",
+          label: "Background",
+          default: "linear-gradient(#ffffff, #000000)"
+        },
+        {
+          type: "font_picker",
+          id: "heading_font",
+          label: "Heading font",
+          default: "helvetica_n4"
+        },
+        {
+          type: "html",
+          id: "video_embed",
+          label: "Video embed"
+        },
+        {
+          type: "image_picker",
+          id: "logo_image",
+          label: "Logo image"
+        },
+        {
+          type: "link_list",
+          id: "menu",
+          label: "Menu"
+        },
+        {
+          type: "liquid",
+          id: "message",
+          label: "Message",
+          default: "Hello , welcome to our shop."
+        },
+        {
+          type: "page",
+          id: "page",
+          label: "Page"
+        },
+        {
+          type: "product",
+          id: "product",
+          label: "Product"
+        },
+        {
+          type: "richtext",
+          id: "paragraph",
+          label: "Paragraph"
+        },
+        {
+          type: "url",
+          id: "button_link",
+          label: "Button link"
+        },
+        {
+          type: "video_url",
+          id: "product_description_video",
+          label: "Product description video",
+          accept: [
+            'youtube',
+            'vimeo'
+          ]
+        },
+        {
+          type: "checkbox",
+          id: "enable_payment_button",
+          label: "Show dynamic checkout button",
+          info: "Each customer will see their preferred payment method from those available on your store, such as PayPal or Apple Pay. [Learn more](https://help.shopify.com/manual/online-store/themes/dynamic-checkout)",
+          default: true
+        }
       ],
       section: {
         name: '',
@@ -34,14 +328,31 @@ export default {
         max_blocks: 16,
         blocks: [],
         templates: []
+      },
+      block: {
+        name: '',
+        type: 'block',
+        settings: []
       }
     }
   },
-  methods: {  
-    onDrop(dropResult) {
-      const reordered = arrayMoveImmutable(this.items, dropResult.removedIndex, dropResult.addedIndex)
-      this.items = reordered
+  methods: {
+    removeSetting(indexSetting) {
+      this.section.settings.splice(indexSetting, 1)
+    },
+    addBlock(){
+      this.section.blocks.push(JSON.parse(JSON.stringify(this.block)))
+    },
+    removeBlock(index)  {
+      this.section.blocks.splice(index, 1)
+    },
+    removeBlockSetting(indexBlock, indexBlockSetting) {
+      this.section.blocks[indexBlock].settings.splice(indexBlockSetting, 1)
+    },
+    log: function(evt) {
+      localStorage.setItem('section', JSON.stringify(this.section))
     }
   }
-}
+};
 </script>
+<style scoped></style>
