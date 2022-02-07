@@ -128,7 +128,14 @@
       </div>
     </div>
     <div class="col-md-3">
-      <pre><code v-if="section" class="">{{ section }}</code></pre>
+      <div class="card text-white bg-success">
+        <div class="card-header">
+          Output Schema
+        </div>
+        <div class="card-body">
+          <pre><code v-if="section" class="text-white">{{ section }}</code></pre>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -364,9 +371,19 @@ a:visited {
   color: black;
 }
 
-
 .block:hover,
 .list-group-item:hover {
   cursor: pointer;
+}
+
+.card,
+.list-group {
+  border-radius: 0;
+}
+
+.input-group-text {
+  border-radius: 0 !important;
+  border-color: rgb(0, 0, 0, 0.125);
+  background-color: rgb(0, 0, 0, 0.03);
 }
 </style>
