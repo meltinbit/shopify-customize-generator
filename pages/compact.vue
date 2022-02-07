@@ -1,11 +1,17 @@
 <template>
-  <Container @drop="onDrop">            
-    <Draggable v-for="item in items" :key="item.id">
-      <div class="draggable-item">
-        {{item}}
-      </div>
-    </Draggable>
-  </Container>
+  <section>
+    <div class="section-settings">
+      <Container @drop="onDrop">            
+        <Draggable v-for="item in items" :key="item.id">
+          <div class="draggable-item section-setting">
+            {{item}}
+          </div>
+        </Draggable>
+      </Container>
+    </div>
+  </section>
+
+  
 </template>
 
 <script>
