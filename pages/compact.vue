@@ -8,6 +8,7 @@
         :list="allElements"
         :group="{ name: 'sectionSettings', pull: 'clone', put: false }"
         @change="log"
+        :clone="handleClone"
       >
         <div
           class="list-group-item"
@@ -143,15 +144,13 @@
 
 <script>
 import draggable from "vuedraggable";
-import rawDisplayer from "vuedraggable";
 
 export default {
   name: "clone",
   display: "Clone",
   order: 2,
   components: {
-    draggable,
-    rawDisplayer
+    draggable
   },
   data() {
     return {
@@ -346,25 +345,25 @@ export default {
     addBlock(){
       this.section.blocks.push(JSON.parse(JSON.stringify(this.block)))
     },
-    removeBlock(index)  {
+    removeBlock(index) {
       this.section.blocks.splice(index, 1)
     },
     removeBlockSetting(indexBlock, indexBlockSetting) {
       this.section.blocks[indexBlock].settings.splice(indexBlockSetting, 1)
     },
+    handleClone(item) {
+      let cloneMe = JSON.parse(JSON.stringify(item))
+      return cloneMe
+    },
     log: function(evt) {
       console.log(evt)
-      let x = 0
-      this.section.settings.forEach( setting => {
-        setting.id = `${setting.type}_${x}`
-        x++
+      this.section.settings.forEach( (setting, index) => {
+        setting.id = `${setting.type}_${index}`
       })
       
       this.section.blocks.forEach( block => {
-        let y = 0
-        block.settings.forEach(setting => {
-          setting.id = `${setting.type}_${y}`
-          y++
+        block.settings.forEach((setting, index) => {
+          setting.id = `${setting.type}_${index}`
         })
         
       })
