@@ -693,13 +693,6 @@ export default {
             'youtube',
             'vimeo'
           ]
-        },
-        {
-          type: "checkbox",
-          id: "enable_payment_button",
-          label: "Show dynamic checkout button",
-          info: "Each customer will see their preferred payment method from those available on your store, such as PayPal or Apple Pay. [Learn more](https://help.shopify.com/manual/online-store/themes/dynamic-checkout)",
-          default: true
         }
       ],
       section: {

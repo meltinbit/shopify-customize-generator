@@ -320,13 +320,6 @@ export default {
             'youtube',
             'vimeo'
           ]
-        },
-        {
-          type: "checkbox",
-          id: "enable_payment_button",
-          label: "Show dynamic checkout button",
-          info: "Each customer will see their preferred payment method from those available on your store, such as PayPal or Apple Pay. [Learn more](https://help.shopify.com/manual/online-store/themes/dynamic-checkout)",
-          default: true
         }
       ],
       section: {
@@ -360,6 +353,21 @@ export default {
       this.section.blocks[indexBlock].settings.splice(indexBlockSetting, 1)
     },
     log: function(evt) {
+      console.log(evt)
+      let x = 0
+      this.section.settings.forEach( setting => {
+        setting.id = `${setting.type}_${x}`
+        x++
+      })
+      
+      this.section.blocks.forEach( block => {
+        let y = 0
+        block.settings.forEach(setting => {
+          setting.id = `${setting.type}_${y}`
+          y++
+        })
+        
+      })
       localStorage.setItem('section', JSON.stringify(this.section))
     }
   }
