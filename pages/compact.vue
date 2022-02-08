@@ -356,14 +356,21 @@ export default {
       return cloneMe
     },
     log: function(evt) {
-      console.log(evt)
+      let x = 0
       this.section.settings.forEach( (setting, index) => {
-        setting.id = `${setting.type}_${index}`
+        if(setting.type != 'header' && setting.type != 'paragraph') {
+          setting.id = `${setting.type}_${x}`
+          x++
+        }
       })
       
       this.section.blocks.forEach( block => {
+        let y = 0
         block.settings.forEach((setting, index) => {
-          setting.id = `${setting.type}_${index}`
+          if(setting.type != 'header' && setting.type != 'paragraph') {
+            setting.id = `${setting.type}_${y}`
+            y++
+          }
         })
         
       })
