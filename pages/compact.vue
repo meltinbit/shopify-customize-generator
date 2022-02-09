@@ -20,7 +20,7 @@
       </draggable>
     </div>
 
-    <div class="col-md-5">
+    <div class="col-md-7">
       <div class="card card-elements">
         <div class="card-header"><strong><b-icon-grid1x2-fill></b-icon-grid1x2-fill>&nbsp;Section</strong></div>
         <div class="card-body">
@@ -132,7 +132,7 @@
       </div>
     </div>
 
-    <div class="col-md-2">
+    <div class="col-md-3">
       <div class="card card-elements">
         <div class="card-header"><b-icon-pen-fill></b-icon-pen-fill><strong>Edit Properties</strong></div>
         <div class="card-body">
@@ -327,19 +327,19 @@
         </div>
       </div>
     </div>
+  </div>
 
-
-    <div class="col-md-3">
-      <div class="card text-white bg-success">
-        <div class="card-header">
-          Output Schema
-        </div>
-        <div class="card-body">
-          <pre><code v-if="section" class="text-white">{{ section }}</code></pre>
-        </div>
-      </div>
+  <a href="#" @click="toggleSource" class="displaySource"><b-icon-code-slash></b-icon-code-slash></a>
+  <div v-if="displaySource" class="card text-white bg-success source-code">
+    <div class="card-header d-flex justify-content-between align-items-start">
+      <span>Output Schema</span>
+      <a href="#" @click="toggleSource()"><b-icon-x font-scale="1.5"></b-icon-x></a>
+    </div>
+    <div class="card-body">
+      <pre><code v-if="section" class="text-white">{{ section }}</code></pre>
     </div>
   </div>
+
 </div>
 </template>
 
@@ -355,6 +355,7 @@ export default {
   },
   data() {
     return {
+      displaySource: false,
       allElements: [
         {
           type: 'header',
@@ -567,6 +568,9 @@ export default {
     pushOptions(element, event) {
       element.options.push(event);
     },
+    toggleSource() {
+      this.displaySource = !this.displaySource
+    },
     log: function(evt) {
       let x = 0
       this.section.settings.forEach( (setting, index) => {
@@ -634,5 +638,28 @@ a:visited {
 
 .card-elements >.card-header {
   background-color: #B9DFD8;
+}
+
+.displaySource {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color:#000;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+}
+
+.displaySource > svg {
+  fill: #fff;
+}
+
+.source-code {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 </style>
