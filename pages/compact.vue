@@ -69,7 +69,7 @@
           <!-- SECTION BLOCKS -->
           <div class="card card-elements">
             <div class="card-header d-flex justify-content-between align-items-start">
-              <span><b-icon-grid></b-icon-grid>&nbsp;<strong>Blocks ({{section.blocks.length}})</strong></span>
+              <span><b-icon-grid3x3-gap-fill></b-icon-grid3x3-gap-fill>&nbsp;<strong>Blocks ({{section.blocks.length}})</strong></span>
               <a href="#" @click="addBlock()" class=""><b-icon-plus font-scale="1.5"></b-icon-plus></a>
             </div>
             <div class="card-body">
@@ -406,6 +406,10 @@ a:visited {
   border-radius: 0 !important;
   border-color: #82CFDC;
   background-color: #E3F5F7;
+}
+
+.form-control {
+  border: 1px solid #82CFDC;
 }
 
 .list-group-item,
