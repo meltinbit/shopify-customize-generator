@@ -7,7 +7,7 @@
     <input type="text" class="form-control form-control-sm" :value="label" @input="updateLabel" />
 
     <label class="form-label">Default</label>
-    <input type="text" class="form-control form-control-sm" :value="def" @input="updateDefault"   />
+    <input type="number" class="form-control form-control-sm" :value="def" @input="updateDefault"   />
   </div>
 </template>
 
@@ -17,7 +17,7 @@ export default {
   props: {
     id: String,
     label: String,
-    def: String
+    def: Number
   },
   methods: {
     updateId(event) {
@@ -27,7 +27,7 @@ export default {
       this.$emit('input-label', event.target.value)
     },
     updateDefault(event) {
-      this.$emit('input-default', event.target.value)
+      this.$emit('input-default', parseInt(event.target.value))
     }
   }
 }

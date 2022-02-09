@@ -17,7 +17,7 @@ export default {
   props: {
     id: String,
     label: String,
-    def: String
+    def: Boolean
   },
   methods: {
     updateId(event) {
@@ -27,7 +27,7 @@ export default {
       this.$emit('input-label', event.target.value)
     },
     updateDefault(event) {
-      this.$emit('input-default', event.target.value)
+      this.$emit('input-default', Boolean(event.target.value))
     }
   }
 }
