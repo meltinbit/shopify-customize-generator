@@ -15,7 +15,7 @@
     <div class="d-flex mb-3">
       <input type="text" placeholder="value" class="form-control form-control-sm mr-1" v-model="newOption.value"> 
       <input type="text" placeholder="label" class="form-control form-control-sm" v-model="newOption.label">
-      <button @click="addOption()" class="btn btn-secondary btn-sm">add</button>
+      <button @click="addOption()" :disabled="!newOption.value || !newOption.label" class="btn btn-secondary btn-sm">add</button>
     </div>
 
     <label class="form-label">Default</label>

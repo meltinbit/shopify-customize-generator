@@ -26,25 +26,25 @@ export default {
   name: 'SRange',
   props: {
     id: String,
-    min: String,
-    max: String,
-    step: String,
+    min: Number,
+    max: Number,
+    step: Number,
     unit: String,
     label: String,
-    def: String
+    def: Number
   },
   methods: {
     updateId(event) {
       this.$emit('input-id', event.target.value)
     },
     updateMin(event) {
-      this.$emit('input-min', event.target.value)
+      this.$emit('input-min', parseInt(event.target.value))
     },
     updateMax(event) {
-      this.$emit('input-max', event.target.value)
+      this.$emit('input-max', parseInt(event.target.value))
     },
     updateStep(event) {
-      this.$emit('input-step', event.target.value)
+      this.$emit('input-step',parseInt( event.target.value))
     },
     updateUnit(event) {
       this.$emit('input-unit', event.target.value)
@@ -53,7 +53,7 @@ export default {
       this.$emit('input-label', event.target.value)
     },
     updateDefault(event) {
-      this.$emit('input-default', event.target.value)
+      this.$emit('input-default', parseInt(event.target.value))
     }
   }
 }
