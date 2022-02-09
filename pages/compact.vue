@@ -324,6 +324,8 @@
             :label="activeElement.label" 
             @input-label="activeElement.label = $event"
           />
+          <span v-else>click on a element to edit values</span>
+
         </div>
       </div>
     </div>
@@ -538,15 +540,13 @@ export default {
         type: 'block',
         settings: []
       },
-      activeElement: {
-        id: null,
-        structure: null
-      }
+      activeElement: {}
     }
   },
   methods: {
     removeSetting(indexSetting) {
       this.section.settings.splice(indexSetting, 1)
+      this.resetActiveElement()
     },
     addBlock(){
       this.section.blocks.push(JSON.parse(JSON.stringify(this.block)))
@@ -563,10 +563,14 @@ export default {
     },
     handleElementEdit(element) {
       this.activeElement = element
-      this.$forceUpdate()
+      //this.$forceUpdate()
     },
     pushOptions(element, event) {
       element.options.push(event);
+    },
+    resetActiveElement() {
+      this.activeElement = {}
+      //this.$forceUpdate()
     },
     toggleSource() {
       this.displaySource = !this.displaySource
