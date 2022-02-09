@@ -1,8 +1,7 @@
 <template>
  <div class="container-fluid p-3">
   <div class="row">
-    <div class="col-md-3">
-      <h3>Elements</h3>
+    <div class="col-md-2">
       <draggable
         class="dragArea list-group-flush"
         :list="allElements"
@@ -11,18 +10,19 @@
         :clone="handleClone"
       >
         <div
-          class="list-group-item"
+          class="list-group-item customize-element"
           v-for="(element, index) in allElements"
           :key="index"
         >
+          <b-icon-grip-vertical></b-icon-grip-vertical>
           {{ element.type }}
         </div>
       </draggable>
     </div>
 
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-header"><strong>Section</strong></div>
+    <div class="col-md-5">
+      <div class="card card-elements">
+        <div class="card-header"><strong><b-icon-grid1x2-fill></b-icon-grid1x2-fill>&nbsp;Section</strong></div>
         <div class="card-body">
           <!--SECTION -->
           <b-input-group size="sm" prepend="Name" class="mb-3"> 
@@ -42,7 +42,7 @@
           </b-input-group>
 
           <!-- SECTION SETTINGS -->
-          <div class="card mb-3">
+          <div class="card card-elements mb-3">
             <div class="card-header"><b-icon-gear-fill></b-icon-gear-fill>&nbsp;<strong>Settings ({{section.settings.length}})</strong></div>
             <div class="card-body">
               <draggable
@@ -57,7 +57,7 @@
                   :key="indexSetting"
                 >
                   <span>
-                    <b-icon-arrows-move></b-icon-arrows-move>
+                    <b-icon-grip-vertical></b-icon-grip-vertical>
                     {{ element.type }}
                   </span>
                   <a href="#" @click="removeSetting(indexSetting)"><b-icon-x font-scale="1.2"></b-icon-x></a>
@@ -67,7 +67,7 @@
           </div>
           
           <!-- SECTION BLOCKS -->
-          <div class="card">
+          <div class="card card-elements">
             <div class="card-header d-flex justify-content-between align-items-start">
               <span><b-icon-grid></b-icon-grid>&nbsp;<strong>Blocks ({{section.blocks.length}})</strong></span>
               <a href="#" @click="addBlock()" class=""><b-icon-plus font-scale="1.5"></b-icon-plus></a>
@@ -86,9 +86,9 @@
                   :key="indexBlock"
                 >
 
-                <div class="card block mb-3">
+                <div class="card card-elements mb-3">
                   <div class="card-header d-flex justify-content-between align-items-start">
-                    <span><b-icon-arrows-move></b-icon-arrows-move>&nbsp;<strong>Block <span v-if="block.name">{{ block.name }}</span></strong></span>
+                    <span><b-icon-grip-vertical></b-icon-grip-vertical>&nbsp;<strong>Block <span v-if="block.name">{{ block.name }}</span></strong></span>
                     <a href="#" @click="removeBlock(indexBlock)" class=""><b-icon-x font-scale="1.2"></b-icon-x></a>
                   </div>
                   <div class="card-body">
@@ -98,8 +98,9 @@
                     <b-input-group size="sm" prepend="Type" class="mb-3"> 
                       <b-form-input v-model="block.type"></b-form-input>
                     </b-input-group>
+                    
                     <!-- SECTION BLOCK SETTINGS -->
-                    <div class="card">
+                    <div class="card card-elements">
                       <div class="card-header"><b-icon-gear-fill></b-icon-gear-fill>&nbsp;Settings ({{section.blocks[indexBlock].settings.length}})</div>
                       <div class="card-body">
                         <draggable
@@ -128,6 +129,12 @@
         </div>
       </div>
     </div>
+
+    <div class="col-md-2">
+
+    </div>
+
+
     <div class="col-md-3">
       <div class="card text-white bg-success">
         <div class="card-header">
@@ -397,7 +404,26 @@ a:visited {
 
 .input-group-text {
   border-radius: 0 !important;
-  border-color: rgb(0, 0, 0, 0.125);
-  background-color: rgb(0, 0, 0, 0.03);
+  border-color: #82CFDC;
+  background-color: #E3F5F7;
+}
+
+.list-group-item,
+.customize-element {
+  background-color: #E3F5F7;
+  border: 1px solid #82CFDC;
+  margin-bottom: .5rem;
+}
+
+.customize-element:hover {
+  cursor: grab;
+}
+
+.card-elements {
+  border: 1px solid #85BDC2;
+}
+
+.card-elements >.card-header {
+  background-color: #B9DFD8;
 }
 </style>
