@@ -342,7 +342,7 @@
 
    
 
-    <a href="#" @click="toggleSource" class="displaySource"><b-icon-code-slash></b-icon-code-slash></a>
+    <a href="#" title="view source code" @click="toggleSource" class="displaySource"><b-icon-code-slash></b-icon-code-slash></a>
     <div v-if="displaySource" class="card text-white bg-success source-code">
       <div class="card-header d-flex justify-content-between align-items-start">
         <span>Output Schema</span>
@@ -539,11 +539,14 @@ export default {
         name: '',
         tag: 'div',
         class: '',
-        limit: 10,
+        limit: 2,
         settings: [],
-        max_blocks: 16,
+        max_blocks: 5,
         blocks: [],
-        templates: []
+        templates: ["article", "index", "page", "product"],
+        presets: {
+          name: ''
+        }
       },
       block: {
         name: '',
@@ -559,7 +562,10 @@ export default {
       this.resetActiveElement()
     },
     addBlock(){
-      this.section.blocks.push(JSON.parse(JSON.stringify(this.block)))
+      const block = JSON.parse(JSON.stringify(this.block))
+      block.name = `Block_${this.section.blocks.length}`
+      block.type = `block_${this.section.blocks.length}`
+      this.section.blocks.push(block)
     },
     removeBlock(index) {
       this.section.blocks.splice(index, 1)
@@ -586,6 +592,7 @@ export default {
       this.displaySource = !this.displaySource
     },
     log: function(evt) {
+      console.log(evt)
       let x = 0
       this.section.settings.forEach( (setting, index) => {
         if(setting.type != 'header' && setting.type != 'paragraph') {
@@ -605,6 +612,15 @@ export default {
         
       })
       localStorage.setItem('section', JSON.stringify(this.section))
+    }
+  },
+  watch: {
+    section: {
+      handler(val) {
+        //set the preset name as the name of the section
+        this.section.presets.name = this.section.name
+      },
+      deep: true
     }
   }
 };
@@ -656,11 +672,11 @@ a:visited {
 
 .displaySource {
   position: absolute;
-  top: 0;
+  bottom: 0;
   right: 0;
   background-color:#000;
-  width: 30px;
-  height: 30px;
+  width: 50px;
+  height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -673,9 +689,11 @@ a:visited {
 
 .source-code {
   position: absolute;
-  top: 0;
+  bottom: 0;
   right: 0;
   min-width: 20vw;
+  max-height: 100vh;
+  overflow-y: scroll;
 }
 
 .wrapper {
