@@ -563,14 +563,14 @@ export default {
     },
     handleElementEdit(element) {
       this.activeElement = element
-      //this.$forceUpdate()
     },
     pushOptions(element, event) {
       element.options.push(event);
     },
     resetActiveElement() {
-      this.activeElement = {}
-      //this.$forceUpdate()
+      for (const key in this.activeElement) {
+        delete this.activeElement[key];
+      }
     },
     toggleSource() {
       this.displaySource = !this.displaySource
