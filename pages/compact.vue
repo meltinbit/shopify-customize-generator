@@ -63,6 +63,7 @@
                   <a href="#" @click="removeSetting(indexSetting)"><b-icon-x font-scale="1.2"></b-icon-x></a>
                 </div>
               </draggable>
+              <p class="drag-here-text" v-if="!section.settings.length">Drag&Drop elements here</p>
             </div>
           </div>
           
@@ -72,7 +73,8 @@
               <span><b-icon-grid3x3-gap-fill></b-icon-grid3x3-gap-fill>&nbsp;<strong>Blocks ({{section.blocks.length}})</strong></span>
               <a href="#" @click="addBlock()" class=""><b-icon-plus font-scale="1.5"></b-icon-plus></a>
             </div>
-            <div class="card-body">
+            <div class="card-body blocks">
+              <p class="info" v-if="!section.blocks.length">Create your first Block</p>
               <draggable
                 :list="section.blocks"
                 class="list-group"
@@ -122,6 +124,7 @@
                             <a href="#" @click="removeBlockSetting(indexBlock, indexBlockSetting)"><b-icon-x></b-icon-x></a>
                           </div>
                         </draggable>
+                        <p class="drag-here-text" v-if="!section.blocks[indexBlock].settings.length">Drag&Drop elements here</p>
                       </div>
                     </div>
                   </div>
@@ -132,8 +135,9 @@
           </div>
         </div>
       </div>
+    </main>
 
-       <section class="contextual">
+   <section class="contextual">
         <div class="card card-elements">
           <div class="card-header"><b-icon-pen-fill></b-icon-pen-fill><strong>Edit Properties</strong></div>
           <div class="card-body">
@@ -338,9 +342,6 @@
           </div>
         </div>
       </section>
-    </main>
-
-   
 
     <a href="#" title="view source code" @click="toggleSource" class="displaySource"><b-icon-code-slash></b-icon-code-slash></a>
     <div v-if="displaySource" class="card text-white bg-success source-code">
@@ -641,6 +642,35 @@ a:visited {
   border-radius: 0;
 }
 
+.list-group-item {
+  z-index: 1;
+}
+
+.card-body {
+  position: relative;
+}
+
+.dragArea {
+  min-height: 50px;
+}
+
+.drag-here-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: .9rem;
+  color: #ccc;
+  margin: 0;
+  padding: .7rem 0;
+  width: 90%;
+  border: 2px dashed #ccc;
+  border-radius: .4rem;
+  background-color: #fafafa;
+  z-index: 0;
+}
+
 .input-group-text {
   border-radius: 0 !important;
   border-color: #82CFDC;
@@ -671,7 +701,7 @@ a:visited {
 }
 
 .displaySource {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   right: 0;
   background-color:#000;
@@ -696,19 +726,25 @@ a:visited {
   overflow-y: scroll;
 }
 
+.info {
+  text-align: center;
+  font-size: .9rem;
+  color: #ccc;
+}
+
 .wrapper {
   display: grid;
-  grid-template-columns: 20vw 1fr;
+  grid-template-columns: 20vw 1fr 25vw;
   grid-gap: .5rem;
 }
 
 main {
   display: grid;
-  grid-template-columns: 1fr 20vw;
   grid-gap: .5rem;
 }
 
-.sidebar {
+.sidebar,
+.contextual {
   position: sticky;
   top: 0;
   overflow-y: scroll;
