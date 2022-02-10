@@ -1,0 +1,20 @@
+.input-inline {
+  display: flex;
+  gap: .2rem;
+  align-items: center;
+  justify-content: center;
+  background-color: #E3F5F7;
+  border:1px solid #82CFDC;
+  margin-bottom: 1rem;
+}
+
+.input-inline > :first-child {
+  margin: 0;
+  padding: 0 .5rem;
+  font-size: .9rem;
+}
+
+.input-inline > input {
+  border: none;
+  border-left:1px solid #82CFDC;
+}

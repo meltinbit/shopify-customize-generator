@@ -1,10 +1,14 @@
 <template>
   <div>
-    <label class="form-label">ID</label>
-    <input type="text" class="form-control form-control-sm" :value="id" @input="updateId" />
+    <div class="input-inline">
+      <label class="form-label">ID</label>
+      <input type="text" class="form-control form-control-sm" :value="id" @input="updateId" />
+    </div>
 
-    <label class="form-label">Label</label>
-    <input type="text" class="form-control form-control-sm" :value="label" @input="updateLabel" />
+    <div class="input-inline">
+      <label class="form-label">Label</label>
+      <input type="text" class="form-control form-control-sm" :value="label" @input="updateLabel" />
+    </div>
   </div>
 </template>
 

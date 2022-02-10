@@ -1,7 +1,9 @@
 <template>
   <div>
-    <label class="form-label">ID</label>
-    <input type="text" class="form-control form-control-sm mb-3" :value="id" @input="updateId" />
+    <div class="input-inline">
+      <label class="form-label">ID</label>
+      <input type="text" class="form-control form-control-sm" :value="id" @input="updateId" />
+    </div>
 
     <div class="d-flex mb-3">
       <input type="text" class="form-control form-control-sm mr-1" placeholder="min" :value="min" @input="updateMin" />
@@ -13,11 +15,15 @@
       <input type="text" class="form-control form-control-sm" placeholder="unit" :value="unit" @input="updateUnit" />
     </div>
 
-    <label class="form-label">Label</label>
-    <input type="text" class="form-control form-control-sm" :value="label" @input="updateLabel" />
+    <div class="input-inline">
+      <label class="form-label">Label</label>
+      <input type="text" class="form-control form-control-sm" :value="label" @input="updateLabel" />
+    </div>
 
-    <label class="form-label">Default</label>
-    <input type="text" class="form-control form-control-sm" :value="def" @input="updateDefault"   />
+    <div class="input-inline">
+      <label class="form-label">Default</label>
+      <input type="text" class="form-control form-control-sm" :value="def" @input="updateDefault"   />
+    </div>
   </div>
 </template>
 

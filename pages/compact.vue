@@ -324,7 +324,15 @@
             :label="activeElement.label" 
             @input-label="activeElement.label = $event"
           />
-          <span v-else>click on a element to edit values</span>
+
+          <SVideoUrl v-if="activeElement.type == 'video_url'" 
+            :id="activeElement.id" 
+            @input-id="activeElement.id = $event" 
+            :label="activeElement.label" 
+            @input-label="activeElement.label = $event"
+          />
+
+          <span v-if="!Object.keys(activeElement).length"><b-icon-info-circle></b-icon-info-circle><i>&nbsp;click on a element to edit values</i></span>
 
         </div>
       </div>

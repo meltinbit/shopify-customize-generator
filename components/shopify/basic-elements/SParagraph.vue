@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="input-inline">
     <label class="form-label">Content</label>
     <textarea type="text" class="form-control form-control-sm" :value="content" @input="updateContent"></textarea>
   </div>
