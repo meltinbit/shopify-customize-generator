@@ -1,7 +1,6 @@
 <template>
- <div class="container-fluid p-3">
-  <div class="row">
-    <div class="col-md-2">
+  <div class="wrapper">
+    <section class="sidebar">
       <draggable
         class="dragArea list-group-flush"
         :list="allElements"
@@ -18,9 +17,9 @@
           {{ element.type }}
         </div>
       </draggable>
-    </div>
+    </section>
 
-    <div class="col-md-7">
+    <main>
       <div class="card card-elements">
         <div class="card-header"><strong><b-icon-grid1x2-fill></b-icon-grid1x2-fill>&nbsp;Section</strong></div>
         <div class="card-body">
@@ -116,7 +115,10 @@
                             :key="indexBlockSetting"
                             @click=handleElementEdit(blockSetting)
                           >
-                            <span>{{ blockSetting.type }}</span>
+                            <span>
+                              <b-icon-grip-vertical></b-icon-grip-vertical>
+                              {{ blockSetting.type }}
+                            </span>
                             <a href="#" @click="removeBlockSetting(indexBlock, indexBlockSetting)"><b-icon-x></b-icon-x></a>
                           </div>
                         </draggable>
@@ -130,227 +132,227 @@
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="col-md-3">
-      <div class="card card-elements">
-        <div class="card-header"><b-icon-pen-fill></b-icon-pen-fill><strong>Edit Properties</strong></div>
-        <div class="card-body">
-          <SHeader v-if="activeElement.type == 'header'" 
-            :content="activeElement.content" 
-            @input-content="activeElement.content = $event" 
-          />
-          <SParagraph v-if="activeElement.type == 'paragraph'" 
-            :content="activeElement.content" 
-            @input-content="activeElement.content = $event" 
-          />
+       <section class="contextual">
+        <div class="card card-elements">
+          <div class="card-header"><b-icon-pen-fill></b-icon-pen-fill><strong>Edit Properties</strong></div>
+          <div class="card-body">
+            <SHeader v-if="activeElement.type == 'header'" 
+              :content="activeElement.content" 
+              @input-content="activeElement.content = $event" 
+            />
+            <SParagraph v-if="activeElement.type == 'paragraph'" 
+              :content="activeElement.content" 
+              @input-content="activeElement.content = $event" 
+            />
 
-          <SText v-if="activeElement.type == 'text'" 
-            :id="activeElement.id" 
-            @input-id="activeElement.id = $event" 
-            :label="activeElement.label" 
-            @input-label="activeElement.label = $event"
-            :def="activeElement.default" 
-            @input-default="activeElement.default = $event"
-          />
+            <SText v-if="activeElement.type == 'text'" 
+              :id="activeElement.id" 
+              @input-id="activeElement.id = $event" 
+              :label="activeElement.label" 
+              @input-label="activeElement.label = $event"
+              :def="activeElement.default" 
+              @input-default="activeElement.default = $event"
+            />
 
-          <STextarea v-if="activeElement.type == 'textarea'" 
-            :id="activeElement.id" 
-            @input-id="activeElement.id = $event" 
-            :label="activeElement.label" 
-            @input-label="activeElement.label = $event"
-            :def="activeElement.default" 
-            @input-default="activeElement.default = $event"
-          />
+            <STextarea v-if="activeElement.type == 'textarea'" 
+              :id="activeElement.id" 
+              @input-id="activeElement.id = $event" 
+              :label="activeElement.label" 
+              @input-label="activeElement.label = $event"
+              :def="activeElement.default" 
+              @input-default="activeElement.default = $event"
+            />
 
-          <SCheckbox v-if="activeElement.type == 'checkbox'" 
-            :id="activeElement.id" 
-            @input-id="activeElement.id = $event" 
-            :label="activeElement.label" 
-            @input-label="activeElement.label = $event"
-            :def="activeElement.default" 
-            @input-default="activeElement.default = $event"
-          />
+            <SCheckbox v-if="activeElement.type == 'checkbox'" 
+              :id="activeElement.id" 
+              @input-id="activeElement.id = $event" 
+              :label="activeElement.label" 
+              @input-label="activeElement.label = $event"
+              :def="activeElement.default" 
+              @input-default="activeElement.default = $event"
+            />
 
-          <SNumber v-if="activeElement.type == 'number'" 
-            :id="activeElement.id" 
-            @input-id="activeElement.id = $event" 
-            :label="activeElement.label" 
-            @input-label="activeElement.label = $event"
-            :def="activeElement.default" 
-            @input-default="activeElement.default = $event"
-          />
-          <SRadio v-if="activeElement.type == 'radio'" 
-            :id="activeElement.id" 
-            @input-id="activeElement.id = $event" 
-            :label="activeElement.label" 
-            @input-label="activeElement.label = $event"
-            :def="activeElement.default" 
-            @input-default="activeElement.default = $event"
-            :options="activeElement.options"
-            @input-options="pushOptions(activeElement, $event)"
-          />
+            <SNumber v-if="activeElement.type == 'number'" 
+              :id="activeElement.id" 
+              @input-id="activeElement.id = $event" 
+              :label="activeElement.label" 
+              @input-label="activeElement.label = $event"
+              :def="activeElement.default" 
+              @input-default="activeElement.default = $event"
+            />
+            <SRadio v-if="activeElement.type == 'radio'" 
+              :id="activeElement.id" 
+              @input-id="activeElement.id = $event" 
+              :label="activeElement.label" 
+              @input-label="activeElement.label = $event"
+              :def="activeElement.default" 
+              @input-default="activeElement.default = $event"
+              :options="activeElement.options"
+              @input-options="pushOptions(activeElement, $event)"
+            />
 
-          <SRange v-if="activeElement.type == 'range'" 
-            :id="activeElement.id" 
-            @input-id="activeElement.id = $event" 
-            :min="activeElement.min" 
-            @input-min="activeElement.min = $event"
-            :max="activeElement.max" 
-            @input-max="activeElement.max = $event"
-            :step="activeElement.step" 
-            @input-step="activeElement.step = $event"
-            :unit="activeElement.unit" 
-            @input-unit="activeElement.unit = $event"
-            :label="activeElement.label" 
-            @input-label="activeElement.label = $event"
-            :def="activeElement.default" 
-            @input-default="activeElement.default = $event"
-          />
+            <SRange v-if="activeElement.type == 'range'" 
+              :id="activeElement.id" 
+              @input-id="activeElement.id = $event" 
+              :min="activeElement.min" 
+              @input-min="activeElement.min = $event"
+              :max="activeElement.max" 
+              @input-max="activeElement.max = $event"
+              :step="activeElement.step" 
+              @input-step="activeElement.step = $event"
+              :unit="activeElement.unit" 
+              @input-unit="activeElement.unit = $event"
+              :label="activeElement.label" 
+              @input-label="activeElement.label = $event"
+              :def="activeElement.default" 
+              @input-default="activeElement.default = $event"
+            />
 
-          <SSelect v-if="activeElement.type == 'select'" 
-            :id="activeElement.id" 
-            @input-id="activeElement.id = $event" 
-            :label="activeElement.label" 
-            @input-label="activeElement.label = $event"
-            :def="activeElement.default" 
-            @input-default="activeElement.default = $event"
-            :options="activeElement.options"
-            @input-options="pushOptions(activeElement, $event)"
-          />
+            <SSelect v-if="activeElement.type == 'select'" 
+              :id="activeElement.id" 
+              @input-id="activeElement.id = $event" 
+              :label="activeElement.label" 
+              @input-label="activeElement.label = $event"
+              :def="activeElement.default" 
+              @input-default="activeElement.default = $event"
+              :options="activeElement.options"
+              @input-options="pushOptions(activeElement, $event)"
+            />
 
-          <SArticle v-if="activeElement.type == 'article'" 
-            :id="activeElement.id" 
-            @input-id="activeElement.id = $event" 
-            :label="activeElement.label" 
-            @input-label="activeElement.label = $event"
-          />
+            <SArticle v-if="activeElement.type == 'article'" 
+              :id="activeElement.id" 
+              @input-id="activeElement.id = $event" 
+              :label="activeElement.label" 
+              @input-label="activeElement.label = $event"
+            />
 
-          <SBlog v-if="activeElement.type == 'blog'" 
-            :id="activeElement.id" 
-            @input-id="activeElement.id = $event" 
-            :label="activeElement.label" 
-            @input-label="activeElement.label = $event"
-          />
+            <SBlog v-if="activeElement.type == 'blog'" 
+              :id="activeElement.id" 
+              @input-id="activeElement.id = $event" 
+              :label="activeElement.label" 
+              @input-label="activeElement.label = $event"
+            />
 
-          <SCollection v-if="activeElement.type == 'collection'" 
-            :id="activeElement.id" 
-            @input-id="activeElement.id = $event" 
-            :label="activeElement.label" 
-            @input-label="activeElement.label = $event"
-          />
+            <SCollection v-if="activeElement.type == 'collection'" 
+              :id="activeElement.id" 
+              @input-id="activeElement.id = $event" 
+              :label="activeElement.label" 
+              @input-label="activeElement.label = $event"
+            />
 
-          <SColor v-if="activeElement.type == 'color'" 
-            :id="activeElement.id" 
-            @input-id="activeElement.id = $event" 
-            :label="activeElement.label" 
-            @input-label="activeElement.label = $event"
-            :def="activeElement.default" 
-            @input-default="activeElement.default = $event"
-          />
+            <SColor v-if="activeElement.type == 'color'" 
+              :id="activeElement.id" 
+              @input-id="activeElement.id = $event" 
+              :label="activeElement.label" 
+              @input-label="activeElement.label = $event"
+              :def="activeElement.default" 
+              @input-default="activeElement.default = $event"
+            />
 
-          <SColorBackground v-if="activeElement.type == 'color_background'" 
-            :id="activeElement.id" 
-            @input-id="activeElement.id = $event" 
-            :label="activeElement.label" 
-            @input-label="activeElement.label = $event"
-            :def="activeElement.default" 
-            @input-default="activeElement.default = $event"
-          />
+            <SColorBackground v-if="activeElement.type == 'color_background'" 
+              :id="activeElement.id" 
+              @input-id="activeElement.id = $event" 
+              :label="activeElement.label" 
+              @input-label="activeElement.label = $event"
+              :def="activeElement.default" 
+              @input-default="activeElement.default = $event"
+            />
 
-          <SFontPicker v-if="activeElement.type == 'font_picker'" 
-            :id="activeElement.id" 
-            @input-id="activeElement.id = $event" 
-            :label="activeElement.label" 
-            @input-label="activeElement.label = $event"
-            :def="activeElement.default" 
-            @input-default="activeElement.default = $event"
-          />
+            <SFontPicker v-if="activeElement.type == 'font_picker'" 
+              :id="activeElement.id" 
+              @input-id="activeElement.id = $event" 
+              :label="activeElement.label" 
+              @input-label="activeElement.label = $event"
+              :def="activeElement.default" 
+              @input-default="activeElement.default = $event"
+            />
 
-          <SHtml v-if="activeElement.type == 'html'" 
-            :id="activeElement.id" 
-            @input-id="activeElement.id = $event" 
-            :label="activeElement.label" 
-            @input-label="activeElement.label = $event"
-          />
+            <SHtml v-if="activeElement.type == 'html'" 
+              :id="activeElement.id" 
+              @input-id="activeElement.id = $event" 
+              :label="activeElement.label" 
+              @input-label="activeElement.label = $event"
+            />
 
-            <SImagePicker v-if="activeElement.type == 'image_picker'" 
-            :id="activeElement.id" 
-            @input-id="activeElement.id = $event" 
-            :label="activeElement.label" 
-            @input-label="activeElement.label = $event"
-          />
+              <SImagePicker v-if="activeElement.type == 'image_picker'" 
+              :id="activeElement.id" 
+              @input-id="activeElement.id = $event" 
+              :label="activeElement.label" 
+              @input-label="activeElement.label = $event"
+            />
 
-          <SLinkList v-if="activeElement.type == 'link_list'" 
-            :id="activeElement.id" 
-            @input-id="activeElement.id = $event" 
-            :label="activeElement.label" 
-            @input-label="activeElement.label = $event"
-          />
+            <SLinkList v-if="activeElement.type == 'link_list'" 
+              :id="activeElement.id" 
+              @input-id="activeElement.id = $event" 
+              :label="activeElement.label" 
+              @input-label="activeElement.label = $event"
+            />
 
-          <SLiquid v-if="activeElement.type == 'liquid'" 
-            :id="activeElement.id" 
-            @input-id="activeElement.id = $event" 
-            :label="activeElement.label" 
-            @input-label="activeElement.label = $event"
-            :def="activeElement.default" 
-            @input-default="activeElement.default = $event"
-          />
+            <SLiquid v-if="activeElement.type == 'liquid'" 
+              :id="activeElement.id" 
+              @input-id="activeElement.id = $event" 
+              :label="activeElement.label" 
+              @input-label="activeElement.label = $event"
+              :def="activeElement.default" 
+              @input-default="activeElement.default = $event"
+            />
 
-          <SPage v-if="activeElement.type == 'page'" 
-            :id="activeElement.id" 
-            @input-id="activeElement.id = $event" 
-            :label="activeElement.label" 
-            @input-label="activeElement.label = $event"
-          />
+            <SPage v-if="activeElement.type == 'page'" 
+              :id="activeElement.id" 
+              @input-id="activeElement.id = $event" 
+              :label="activeElement.label" 
+              @input-label="activeElement.label = $event"
+            />
 
-          <SProduct v-if="activeElement.type == 'product'" 
-            :id="activeElement.id" 
-            @input-id="activeElement.id = $event" 
-            :label="activeElement.label" 
-            @input-label="activeElement.label = $event"
-          />
+            <SProduct v-if="activeElement.type == 'product'" 
+              :id="activeElement.id" 
+              @input-id="activeElement.id = $event" 
+              :label="activeElement.label" 
+              @input-label="activeElement.label = $event"
+            />
 
-          <SRichtext v-if="activeElement.type == 'richtext'" 
-            :id="activeElement.id" 
-            @input-id="activeElement.id = $event" 
-            :label="activeElement.label" 
-            @input-label="activeElement.label = $event"
-          />
+            <SRichtext v-if="activeElement.type == 'richtext'" 
+              :id="activeElement.id" 
+              @input-id="activeElement.id = $event" 
+              :label="activeElement.label" 
+              @input-label="activeElement.label = $event"
+            />
 
-          <SUrl v-if="activeElement.type == 'url'" 
-            :id="activeElement.id" 
-            @input-id="activeElement.id = $event" 
-            :label="activeElement.label" 
-            @input-label="activeElement.label = $event"
-          />
+            <SUrl v-if="activeElement.type == 'url'" 
+              :id="activeElement.id" 
+              @input-id="activeElement.id = $event" 
+              :label="activeElement.label" 
+              @input-label="activeElement.label = $event"
+            />
 
-          <SVideoUrl v-if="activeElement.type == 'video_url'" 
-            :id="activeElement.id" 
-            @input-id="activeElement.id = $event" 
-            :label="activeElement.label" 
-            @input-label="activeElement.label = $event"
-          />
+            <SVideoUrl v-if="activeElement.type == 'video_url'" 
+              :id="activeElement.id" 
+              @input-id="activeElement.id = $event" 
+              :label="activeElement.label" 
+              @input-label="activeElement.label = $event"
+            />
 
-          <span v-if="!Object.keys(activeElement).length"><b-icon-info-circle></b-icon-info-circle><i>&nbsp;click on a element to edit values</i></span>
+            <span v-if="!Object.keys(activeElement).length"><b-icon-info-circle></b-icon-info-circle><i>&nbsp;click on a element to edit values</i></span>
 
+          </div>
         </div>
+      </section>
+    </main>
+
+   
+
+    <a href="#" @click="toggleSource" class="displaySource"><b-icon-code-slash></b-icon-code-slash></a>
+    <div v-if="displaySource" class="card text-white bg-success source-code">
+      <div class="card-header d-flex justify-content-between align-items-start">
+        <span>Output Schema</span>
+        <a href="#" @click="toggleSource()"><b-icon-x font-scale="1.5"></b-icon-x></a>
+      </div>
+      <div class="card-body">
+        <pre><code v-if="section" class="text-white">{{ section }}</code></pre>
       </div>
     </div>
   </div>
-
-  <a href="#" @click="toggleSource" class="displaySource"><b-icon-code-slash></b-icon-code-slash></a>
-  <div v-if="displaySource" class="card text-white bg-success source-code">
-    <div class="card-header d-flex justify-content-between align-items-start">
-      <span>Output Schema</span>
-      <a href="#" @click="toggleSource()"><b-icon-x font-scale="1.5"></b-icon-x></a>
-    </div>
-    <div class="card-body">
-      <pre><code v-if="section" class="text-white">{{ section }}</code></pre>
-    </div>
-  </div>
-
-</div>
 </template>
 
 <script>
@@ -673,5 +675,25 @@ a:visited {
   position: absolute;
   top: 0;
   right: 0;
+  min-width: 20vw;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 20vw 1fr;
+  grid-gap: .5rem;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 1fr 20vw;
+  grid-gap: .5rem;
+}
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  overflow-y: scroll;
+  max-height: 100vh;
 }
 </style>
