@@ -1,8 +1,8 @@
 <template>
-  <div v-if="$auth.$state.loggedIn">
+  <div v-if="$auth.$state.loggedIn" class="user">
       <img :src="picture" class="avatar" />
       {{$auth.user.name}}
-      <a href="#" @click.prevent="$auth.logout()"><b-icon-power></b-icon-power></a>
+      <a href="#" @click.prevent="$auth.logout()"><b-icon-power font-scale="1.5"></b-icon-power></a>
     </div>
 </template>
 
@@ -32,5 +32,12 @@ export default {
 a:link,
 a:visited {
   color: black;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 </style>

@@ -353,7 +353,7 @@
       <section class="theme-browser">
         <div class="card">
           <div class="card-header">
-            <span>Theme Browser</span>
+            <span><b-icon-hdd-network-fill></b-icon-hdd-network-fill>&nbsp;Theme Browser</span>
           </div>
           <div class="card-body">
             <select class="form-control" v-model="theme_id" @change="setTheme($event)">
@@ -362,7 +362,7 @@
             </select>
 
             <div v-if="themeSections.length">
-              <h6 class="mt-4 mb-2">Sections</h6>
+              <h6 class="mt-4 mb-2 ml-3">Sections</h6>
               <ul>
                 <li v-for="(themeSection, idx) in themeSections" :key="idx">
                   {{themeSection.name}} 
@@ -635,8 +635,8 @@ main {
 
 .list-group-item,
 .customize-element {
-  background-color: #143A48;
-  border: 2px solid #184C5E;
+  background-color: #2B3A41;
+  border: 2px solid #2B3A41;
   border-radius: 5rem;
   color: white;
   margin-bottom: .5rem;

@@ -1,7 +1,15 @@
+:root {
+  --body-bg: #0C1115;
+  --text: #aaa;
+  --background: #0A1D26; /*#143A48*/
+  --border: #16262E;
+  --input-background: #2B3A41;
+}
+
 body {
-  background-color: #0C1115;
+  background-color: var(--body-bg);
   font-family: 'Helvetica Neue';
-  color: #999;
+  color: var(--text);
   padding: 1rem;
   font-weight: 400;
 }
@@ -9,7 +17,7 @@ body {
 a:link,
 a:visited,
 svg {
-  color: #999;
+  color: var(--text);
 }
 
 ul {
@@ -19,12 +27,12 @@ ul {
 }
 
 ul > li {
-  background-color: #223636;
+  background-color: var(--input-background);
   margin-bottom: 5px;
   padding: .5rem 1.4rem;
   border-radius: 25px;
   font-size: .9rem;
-  color: #999;
+  color: var(--text);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -40,18 +48,18 @@ input[type=number],
 input[type=number]:focus,
 select,
 select:focus {
-  background-color: #223636;
+  background-color: var(--input-background);
   color: white;
   font-size: .9rem;
 }
 
 
 .card {
-  border: 1px solid #184C5E;
+  border: 1px solid var(--border);
 }
 
 .card-header {
-  background-color: #143A48;
+  background-color: var(--background);
 }
 
 .card-body {
@@ -64,8 +72,8 @@ select:focus {
   gap: .2rem;
   align-items: center;
   justify-content: center;
-  background-color: #143A48;
-  border:1px solid #184C5E;
+  background-color: var(--background);
+  border:1px solid var(--border);
   margin-bottom: 1rem;
 }
 
@@ -76,30 +84,30 @@ select:focus {
 
 .input-inline > input {
   border: none;
-  border-left:1px solid #184C5E;
+  border-left:1px solid var(--border);
 }
 
 .input-group-text {
   border-radius: 0 !important;
-  border-color: #184C5E;
-  background-color: #143A48;
-  color: #999;
+  border-color: var(--border);
+  background-color: var(--background);
+  color: var(--text);
 }
 
 .form-control {
   color: white;
-  background-color: #223636;
-  border:1px solid #184C5E;
+  background-color: var(--input-background);
+  border:1px solid var(--border);
 }
 
 .btn-secondary {
-  color: #fff;
-  background-color: #1e5760;
-  border-color: #18777e;
+  color: white;
+  background-color: var(--background);
+  border-color: var(--border);
 }
 
 .btn-secondary.disabled, .btn-secondary:disabled {
-  color: #fff;
+  color: white;
   background-color: none;
   border-color: #ccc;
   fill: white;
