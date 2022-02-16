@@ -1,4 +1,5 @@
 <template>
+<div> 
   <div class="wrapper">
     <section class="sidebar">
       <draggable
@@ -21,7 +22,10 @@
 
     <main>
       <div class="card card-elements">
-        <div class="card-header"><strong><b-icon-grid1x2-fill></b-icon-grid1x2-fill>&nbsp;Section</strong></div>
+        <div class="card-header d-flex justify-content-between align-items-start">
+          <strong><b-icon-grid1x2-fill></b-icon-grid1x2-fill>&nbsp;Section</strong>
+          <b-button v-b-modal.load-modal>Load</b-button>
+        </div>
         <div class="card-body">
           <!--SECTION -->
           <b-input-group size="sm" prepend="Name" class="mb-3"> 
@@ -343,16 +347,24 @@
         </div>
       </section>
 
-    <a href="#" title="view source code" @click="toggleSource" class="displaySource"><b-icon-code-slash></b-icon-code-slash></a>
-    <div v-if="displaySource" class="card text-white bg-success source-code">
-      <div class="card-header d-flex justify-content-between align-items-start">
-        <span>Output Schema</span>
-        <a href="#" @click="toggleSource()"><b-icon-x font-scale="1.5"></b-icon-x></a>
+      <!-- SOURCE CODE -->
+      <a href="#" title="view source code" @click="toggleSource" class="displaySource"><b-icon-code-slash></b-icon-code-slash></a>
+      <div v-if="displaySource" class="card text-white bg-success source-code">
+        <div class="card-header fixed-top d-flex justify-content-between align-items-start">
+          <span>Output Schema</span>
+          <a href="#" @click="toggleSource()" class="text-white"><b-icon-x font-scale="1.5"></b-icon-x></a>
+        </div>
+        <div class="card-body">
+          <pre><code v-if="section" class="text-white">{{ section }}</code></pre>
+        </div>
       </div>
-      <div class="card-body">
-        <pre><code v-if="section" class="text-white">{{ section }}</code></pre>
-      </div>
-    </div>
+  </div>
+
+  <b-modal id="load-modal" title="Load Section Schema">
+    <textarea v-model="loadSchema" autofocus class="form-control" style="min-height: 400px"></textarea>
+    <b-button class="mt-3" variant="outline-danger" block @click="load()">LOAD</b-button>
+  </b-modal>
+
   </div>
 </template>
 
@@ -554,7 +566,8 @@ export default {
         type: 'block',
         settings: []
       },
-      activeElement: {}
+      activeElement: {},
+      loadSchema: ''
     }
   },
   methods: {
@@ -591,6 +604,10 @@ export default {
     },
     toggleSource() {
       this.displaySource = !this.displaySource
+    },
+    load() {
+      this.section = JSON.parse(this.loadSchema)
+      this.loadSchema = ''
     },
     log: function(evt) {
       console.log(evt)
@@ -667,24 +684,32 @@ a:visited {
   width: 90%;
   border: 2px dashed #ccc;
   border-radius: .4rem;
-  background-color: #fafafa;
+  background-color: #253e42;
   z-index: 0;
 }
 
 .input-group-text {
   border-radius: 0 !important;
-  border-color: #82CFDC;
-  background-color: #E3F5F7;
+  /* border-color: #82CFDC;
+  background-color: #E3F5F7; */
+  border-color: #184C5E;
+  background-color: #143A48;
+  color: white;
 }
 
 .form-control {
-  border: 1px solid #82CFDC;
+  /* border: 1px solid #82CFDC; */
+  border: 1px solid #184C5E;
 }
 
 .list-group-item,
 .customize-element {
-  background-color: #E3F5F7;
-  border: 1px solid #82CFDC;
+  /* background-color: #E3F5F7;
+  border: 1px solid #82CFDC; */
+  background-color: #143A48;
+  border: 2px solid #184C5E;
+  border-radius: 5rem;
+  color: white;
   margin-bottom: .5rem;
 }
 
@@ -693,11 +718,12 @@ a:visited {
 }
 
 .card-elements {
-  border: 1px solid #85BDC2;
+  border: 1px solid #184C5E;
 }
 
 .card-elements >.card-header {
-  background-color: #B9DFD8;
+  background-color: #143A48;
+  color: white;
 }
 
 .displaySource {
@@ -718,11 +744,12 @@ a:visited {
 }
 
 .source-code {
-  position: absolute;
-  bottom: 0;
+  position: fixed;
+  top: 0;
   right: 0;
+  z-index: 3;
   min-width: 20vw;
-  max-height: 100vh;
+  height: 100vh;
   overflow-y: scroll;
 }
 
@@ -734,7 +761,7 @@ a:visited {
 
 .wrapper {
   display: grid;
-  grid-template-columns: 20vw 1fr 25vw;
+  grid-template-columns: 15vw 1fr 25vw 15vw;
   grid-gap: .5rem;
 }
 

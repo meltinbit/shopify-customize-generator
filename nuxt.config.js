@@ -16,6 +16,12 @@ export default {
     ]
   },
 
+  router: {
+    middleware: ['auth']
+  },
+  serverMiddleware: [
+    { path: "/api", handler: "~/api/server.js" },
+  ],
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     '~/static/css/global.css'
@@ -43,7 +49,22 @@ export default {
     'bootstrap-vue/nuxt',
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/auth-next'
   ],
+  auth: {
+    redirect: {
+      home: '/compact',
+      login: '/login',
+      callback: '/callback',
+      logout: '/login'
+    },
+    strategies: {
+      github: { 
+        clientId: process.env.GITHUB_CLIENT_ID,//'9a014af8e98d302d9314',
+        clientSecret: process.env.GITHUB_CLIENT_SECRET//'dbd5023e10aab0507e1025a1f99b887abad7f1f2' 
+      },
+    }
+  },
   bootstrapVue: {
     // Install the `IconsPlugin` plugin (in addition to `BootstrapVue` plugin)
     icons: true
