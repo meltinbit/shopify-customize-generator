@@ -24,7 +24,7 @@
       <div class="card card-elements">
         <div class="card-header d-flex justify-content-between align-items-start">
           <strong><b-icon-grid1x2-fill></b-icon-grid1x2-fill>&nbsp;Section</strong>
-          <b-button v-b-modal.load-modal>Load</b-button>
+          <b-icon-folder-fill v-b-modal.load-modal></b-icon-folder-fill>
         </div>
         <div class="card-body">
           <!--SECTION -->
@@ -347,10 +347,35 @@
         </div>
       </section>
 
+      <section class="theme-browser">
+        <div class="card">
+          <div class="card-header">
+            <span>Theme Browser</span>
+          </div>
+          <div class="card-body">
+            <select class="form-control" v-model="theme_id" @change="setTheme($event)">
+              <option>choose a theme</option>
+              <option v-for="(theme,idx) in themes" :key="idx" :value="theme.id">{{ theme.name }}</option>
+            </select>
+
+            <div v-if="themeSections.length">
+              <h6 class="mt-4 mb-2">Sections</h6>
+              <ul>
+                <li v-for="(themeSection, idx) in themeSections" :key="idx">
+                  {{themeSection.name}} 
+                  <b-icon-folder-fill @click="getThemeAsset(themeSection.asset.theme_id, themeSection.asset.key)"></b-icon-folder-fill>
+                </li>
+              </ul>
+            </div>
+          
+          </div>
+        </div>
+      </section>
+
       <!-- SOURCE CODE -->
       <a href="#" title="view source code" @click="toggleSource" class="displaySource"><b-icon-code-slash></b-icon-code-slash></a>
-      <div v-if="displaySource" class="card text-white bg-success source-code">
-        <div class="card-header fixed-top d-flex justify-content-between align-items-start">
+      <div v-if="displaySource" class="card source-code">
+        <div class="card-header">
           <span>Output Schema</span>
           <a href="#" @click="toggleSource()" class="text-white"><b-icon-x font-scale="1.5"></b-icon-x></a>
         </div>
@@ -370,6 +395,7 @@
 
 <script>
 import draggable from "vuedraggable";
+import axios from 'axios'
 
 export default {
   name: "clone",
@@ -567,7 +593,24 @@ export default {
         settings: []
       },
       activeElement: {},
-      loadSchema: ''
+      loadSchema: '',
+      themes: [],
+      theme_id: null,
+      assets: [],
+      themeSections: [],
+      sectionSchemaReset: {
+        name: '',
+        tag: 'div',
+        class: '',
+        limit: 2,
+        settings: [],
+        max_blocks: 5,
+        blocks: [],
+        templates: ["article", "index", "page", "product"],
+        presets: {
+          name: ''
+        }
+      },
     }
   },
   methods: {
@@ -609,7 +652,7 @@ export default {
       this.section = JSON.parse(this.loadSchema)
       this.loadSchema = ''
     },
-    log: function(evt) {
+    log(evt) {
       console.log(evt)
       let x = 0
       this.section.settings.forEach( (setting, index) => {
@@ -630,6 +673,58 @@ export default {
         
       })
       localStorage.setItem('section', JSON.stringify(this.section))
+    },
+    loadTheme() {
+      if (process.browser){
+        const theme_id = localStorage.getItem('theme_id')
+        if(theme_id) {
+          this.theme_id = theme_id
+          this.getThemeAssets(theme_id)
+        }
+      }
+    },
+    setTheme(evt) {
+      this.theme_id = evt.target.value
+      localStorage.setItem('theme_id', this.theme_id)
+      this.getThemeAssets(this.theme_id)
+    },
+    async getThemeAssets(theme_id) {
+      try {
+        const response = await axios.get(`/api/assets?theme_id=${theme_id}`)
+        const assets = response.data.assets
+        assets.forEach( asset => {
+          const [type, name] = asset.key.split('/')
+          if(type == 'sections') {
+            this.themeSections.push({
+              asset: asset,
+              name: name
+            })
+          }
+        })
+        //this.assets = response.data.assets
+      } catch( err ) {
+        console.log(err)
+      }
+    },
+    async getThemeAsset(theme_id, key) {
+      try {
+        const response = await axios.get(`/api/asset?theme_id=${theme_id}&key=${key}`)
+        /* this.asset = response.data.asset
+        this.schema = response.data.schema */
+        this.section = response.data.schema
+      } catch( err ) {
+        console.log(err)
+      }
+    }
+  },
+  async asyncData({ $axios }) {
+    try {
+      const response = await $axios.get('/api/themes')
+      return {
+        themes: response.data.themes
+      }
+    } catch( err ) {
+      console.log(err)
     }
   },
   watch: {
@@ -640,13 +735,31 @@ export default {
       },
       deep: true
     }
+  },
+  created() {
+    this.loadTheme()
   }
 };
 </script>
 <style scoped>
-a:link,
-a:visited {
-  color: black;
+.wrapper {
+  display: grid;
+  grid-template-columns: 15vw 1fr 20vw 20vw;
+  grid-gap: .5rem;
+}
+
+main {
+  display: grid;
+  grid-gap: .5rem;
+}
+
+.sidebar,
+.contextual,
+.theme-browser {
+  position: sticky;
+  top: 100px;
+  overflow-y: scroll;
+  max-height: 100vh;
 }
 
 .block:hover,
@@ -663,9 +776,6 @@ a:visited {
   z-index: 1;
 }
 
-.card-body {
-  position: relative;
-}
 
 .dragArea {
   min-height: 50px;
@@ -688,24 +798,8 @@ a:visited {
   z-index: 0;
 }
 
-.input-group-text {
-  border-radius: 0 !important;
-  /* border-color: #82CFDC;
-  background-color: #E3F5F7; */
-  border-color: #184C5E;
-  background-color: #143A48;
-  color: white;
-}
-
-.form-control {
-  /* border: 1px solid #82CFDC; */
-  border: 1px solid #184C5E;
-}
-
 .list-group-item,
 .customize-element {
-  /* background-color: #E3F5F7;
-  border: 1px solid #82CFDC; */
   background-color: #143A48;
   border: 2px solid #184C5E;
   border-radius: 5rem;
@@ -717,14 +811,6 @@ a:visited {
   cursor: grab;
 }
 
-.card-elements {
-  border: 1px solid #184C5E;
-}
-
-.card-elements >.card-header {
-  background-color: #143A48;
-  color: white;
-}
 
 .displaySource {
   position: fixed;
@@ -753,28 +839,20 @@ a:visited {
   overflow-y: scroll;
 }
 
+.source-code > .card-header {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .info {
   text-align: center;
   font-size: .9rem;
   color: #ccc;
 }
 
-.wrapper {
-  display: grid;
-  grid-template-columns: 15vw 1fr 25vw 15vw;
-  grid-gap: .5rem;
-}
 
-main {
-  display: grid;
-  grid-gap: .5rem;
-}
-
-.sidebar,
-.contextual {
-  position: sticky;
-  top: 0;
-  overflow-y: scroll;
-  max-height: 100vh;
-}
 </style>

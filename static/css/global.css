@@ -1,7 +1,7 @@
 body {
   background-color: #0C1115;
   font-family: 'Helvetica Neue';
-  color: white;
+  color: #999;
   padding: 1rem;
   font-weight: 400;
 }
@@ -9,7 +9,25 @@ body {
 a:link,
 a:visited,
 svg {
-  color: white;
+  color: #999;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul > li {
+  background-color: #223636;
+  margin-bottom: 5px;
+  padding: .5rem 1.4rem;
+  border-radius: 25px;
+  font-size: .9rem;
+  color: #999;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .card {
@@ -20,10 +38,25 @@ input[type=text],
 input[type=text]:focus,
 input[type=number],
 input[type=number]:focus,
-select {
+select,
+select:focus {
   background-color: #223636;
   color: white;
 }
+
+
+.card {
+  border: 1px solid #184C5E;
+}
+
+.card-header {
+  background-color: #143A48;
+}
+
+.card-body {
+  position: relative;
+}
+
 
 .input-inline {
   display: flex;
@@ -44,6 +77,13 @@ select {
 .input-inline > input {
   border: none;
   border-left:1px solid #184C5E;
+}
+
+.input-group-text {
+  border-radius: 0 !important;
+  border-color: #184C5E;
+  background-color: #143A48;
+  color: white;
 }
 
 .form-control {
