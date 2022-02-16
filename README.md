@@ -1,6 +1,7 @@
 # shopify-customize-generator
 
 Drag and Drop UI for creating Shopify Section JSON schema.
+They can be saved directly on a connected Store and Theme, ready to be used in the Customize.
 
 ## Build Setup
 
