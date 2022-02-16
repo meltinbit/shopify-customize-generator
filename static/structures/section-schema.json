@@ -1,0 +1,15 @@
+{
+  "name": "",
+  "tag": "div",
+  "class": "",
+  "limit": 2,
+  "settings": [],
+  "max_blocks": 5,
+  "blocks": [],
+  "templates": ["article", "index", "page", "product"],
+  "presets": [
+    {
+      "name": ""
+    }
+  ]
+}

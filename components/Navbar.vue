@@ -2,7 +2,6 @@
   <nav v-if="$auth.$state.loggedIn" class="navbar">
     <ul>
       <li><NuxtLink to="/">Home</NuxtLink></li>
-      <li><NuxtLink to="/shop">Shop</NuxtLink></li>
       <li><NuxtLink to="/compact">Composer</NuxtLink></li>
     </ul>
     <ul>
