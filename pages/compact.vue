@@ -410,6 +410,7 @@ import allElements from '~/static/structures/all-elements.js'
 
 export default {
   name: "clone",
+  //display: "Clone",
   order: 2,
   components: {
     draggable

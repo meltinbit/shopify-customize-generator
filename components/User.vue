@@ -2,7 +2,7 @@
   <div v-if="$auth.$state.loggedIn">
       <img :src="picture" class="avatar" />
       {{$auth.user.name}}
-      <a href="#" @click="$auth.logout()"><b-icon-power></b-icon-power></a>
+      <a href="#" @click.prevent="$auth.logout()"><b-icon-power></b-icon-power></a>
     </div>
 </template>
 
