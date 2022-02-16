@@ -20,10 +20,12 @@ app.get('/themes', async (req, res) => {
   try {
     const result = await axios.get(url, {headers: HEADERS})
     themes = result.data.themes
+    res.json({ themes: themes })
   } catch( err ) {
-    console.log(err)
+    console.log(err.response.data)
+    res.json({ errors: err.response.data.errors })
   }
-  res.json({ themes: themes })
+  
 })
 
 /**
@@ -35,10 +37,11 @@ app.get('/assets', async (req, res) => {
   try {
     const result = await axios.get(url, {headers: HEADERS})
     assets = result.data.assets
+    res.json({ assets: assets })
   } catch( err ) {
-    console.log(err)
+    console.log(err.response.data)
+    res.json({ errors: err.response.data.errors })
   }
-  res.json({ assets: assets })
 })
 
 /**
@@ -54,7 +57,8 @@ app.get('/asset', async (req, res) => {
     const schema = clean.split('{%schema%}').pop().split('{%endschema%}')[0];
     res.json({ asset: asset, schema: JSON.parse(schema) })
   } catch( err ) {
-    console.log(err)
+    console.log(err.response.data)
+    res.json({ errors: err.response.data.errors })
   }
 })
 
@@ -66,11 +70,11 @@ app.get('/asset', async (req, res) => {
   let asset = {}
   const data = {
     asset: {
-      key: 'sections/try.liquid',
-      value: 'pippo'
+      key: req.body.key,
+      value: req.body.value
     }
   }
-
+  //console.log(data.asset)
   try {
     const result = await axios.put(url, data, { 
       headers: HEADERS,
@@ -78,7 +82,8 @@ app.get('/asset', async (req, res) => {
     asset = result.data.asset
     res.json({ asset: asset })
   } catch( err ) {
-    console.log(err)
+    console.log(err.response.data.errors)
+    res.json({ errors: err.response.data.errors })
   }
 })
 

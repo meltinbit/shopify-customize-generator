@@ -42,6 +42,7 @@ select,
 select:focus {
   background-color: #223636;
   color: white;
+  font-size: .9rem;
 }
 
 
@@ -71,7 +72,6 @@ select:focus {
 .input-inline > :first-child {
   margin: 0;
   padding: 0 .5rem;
-  font-size: .9rem;
 }
 
 .input-inline > input {
@@ -83,7 +83,7 @@ select:focus {
   border-radius: 0 !important;
   border-color: #184C5E;
   background-color: #143A48;
-  color: white;
+  color: #999;
 }
 
 .form-control {
@@ -100,7 +100,7 @@ select:focus {
 
 .btn-secondary.disabled, .btn-secondary:disabled {
   color: #fff;
-  background-color: #999;
+  background-color: none;
   border-color: #ccc;
-  opacity: .4;
+  fill: white;
 }

@@ -24,12 +24,15 @@
       <div class="card card-elements">
         <div class="card-header d-flex justify-content-between align-items-start">
           <strong><b-icon-grid1x2-fill></b-icon-grid1x2-fill>&nbsp;Section</strong>
-          <b-icon-folder-fill v-b-modal.load-modal></b-icon-folder-fill>
+          <div>
+            <a href="#"><b-icon-folder-fill v-b-modal.load-modal title="paste Section JSON schema"></b-icon-folder-fill></a>
+            <a href="#"><b-icon-trash-fill @click="sectionReset()" title="reset Section"></b-icon-trash-fill></a>
+          </div>
         </div>
         <div class="card-body">
           <!--SECTION -->
           <b-input-group size="sm" prepend="Name" class="mb-3"> 
-            <b-form-input v-model="section.name"></b-form-input>
+            <b-form-input v-model="section.name" @input="setClassPreset"></b-form-input>
           </b-input-group>
 
           <b-input-group size="sm" prepend="Tag" class="mb-3">
@@ -380,6 +383,11 @@
           <a href="#" @click="toggleSource()" class="text-white"><b-icon-x font-scale="1.5"></b-icon-x></a>
         </div>
         <div class="card-body">
+          <div class="d-flex align-items-center justify-content-center mb-3">
+            <input v-model="sectionName" type="text" placeholder="choose a filename" class="form-control form-control-sm mr-2">
+            <button @click="sectionSave()" :disabled="!sectionName" class="btn btn-secondary btn-sm" title="upload Section"><b-icon-cloud-upload-fill></b-icon-cloud-upload-fill></button>
+          </div>
+          
           <pre><code v-if="section" class="text-white">{{ section }}</code></pre>
         </div>
       </div>
@@ -583,9 +591,11 @@ export default {
         max_blocks: 5,
         blocks: [],
         templates: ["article", "index", "page", "product"],
-        presets: {
-          name: ''
-        }
+        presets: [
+          {
+            name: ''
+          }
+        ]
       },
       block: {
         name: '',
@@ -598,6 +608,7 @@ export default {
       theme_id: null,
       assets: [],
       themeSections: [],
+      sectionName: '',
       sectionSchemaReset: {
         name: '',
         tag: 'div',
@@ -607,13 +618,18 @@ export default {
         max_blocks: 5,
         blocks: [],
         templates: ["article", "index", "page", "product"],
-        presets: {
-          name: ''
-        }
+        presets: [
+          {
+            name: ''
+          }
+        ]
       },
     }
   },
   methods: {
+    setClassPreset() {
+      this.section.class = this.section.presets[0].name = this.section.name
+    },
     removeSetting(indexSetting) {
       this.section.settings.splice(indexSetting, 1)
       this.resetActiveElement()
@@ -644,6 +660,9 @@ export default {
       for (const key in this.activeElement) {
         delete this.activeElement[key];
       }
+    },
+    sectionReset() {
+      this.section = this.sectionSchemaReset
     },
     toggleSource() {
       this.displaySource = !this.displaySource
@@ -687,6 +706,17 @@ export default {
       this.theme_id = evt.target.value
       localStorage.setItem('theme_id', this.theme_id)
       this.getThemeAssets(this.theme_id)
+    },
+    async sectionSave() {
+      try {
+        const response = await axios.put(`/api/asset?theme_id=${this.theme_id}`, {
+          key: `sections/${this.sectionName}.liquid`,
+          value: `{%schema%}${JSON.stringify(this.section, null, 2)}{%endschema%}`
+        })
+        const asset = response.data.asset
+      } catch( err ) {
+        console.log(err)
+      }
     },
     async getThemeAssets(theme_id) {
       try {
