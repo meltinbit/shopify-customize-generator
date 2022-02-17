@@ -49,8 +49,12 @@ export default {
     'bootstrap-vue/nuxt',
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    '@nuxtjs/auth-next'
+    '@nuxtjs/auth-next',
+    '@nuxtjs/toast'
   ],
+  toast: {
+    position: 'top-right',
+  },
   auth: {
     redirect: {
       home: '/compact',
@@ -60,8 +64,8 @@ export default {
     },
     strategies: {
       github: { 
-        clientId: process.env.GITHUB_CLIENT_ID,//'9a014af8e98d302d9314',
-        clientSecret: process.env.GITHUB_CLIENT_SECRET//'dbd5023e10aab0507e1025a1f99b887abad7f1f2' 
+        clientId: process.env.GITHUB_CLIENT_ID,
+        clientSecret: process.env.GITHUB_CLIENT_SECRET
       },
     }
   },

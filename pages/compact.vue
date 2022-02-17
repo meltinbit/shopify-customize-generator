@@ -146,7 +146,7 @@
 
    <section class="contextual">
         <div class="card card-elements">
-          <div class="card-header"><b-icon-pen-fill></b-icon-pen-fill><strong>Edit Properties</strong></div>
+          <div class="card-header"><b-icon-pen-fill></b-icon-pen-fill>&nbsp;<strong>Edit Properties</strong></div>
           <div class="card-body">
             <SHeader v-if="activeElement.type == 'header'" 
               :content="activeElement.content" 
@@ -407,6 +407,7 @@ import axios from 'axios'
 import sectionSchema from '~/static/structures/section-schema.json'
 import blockSchema from '~/static/structures/section-schema.json'
 import allElements from '~/static/structures/all-elements.js'
+import generateName  from '~/utils/random-name-generator.js'
 
 export default {
   name: "clone",
@@ -433,7 +434,7 @@ export default {
   },
   methods: {
     setClassPreset() {
-      this.section.class = this.section.presets[0].name = this.section.name
+      this.section.class = this.section.presets[0].name = this.sectionName = this.section.name
     },
     removeSetting(indexSetting) {
       this.section.settings.splice(indexSetting, 1)
@@ -521,6 +522,7 @@ export default {
         const asset = response.data.asset
       } catch( err ) {
         console.log(err)
+        this.$toast.error('errors')
       }
     },
     async getThemeAssets(theme_id) {
@@ -550,6 +552,14 @@ export default {
       } catch( err ) {
         console.log(err)
       }
+    },
+    getRandomString(length) {
+        var randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var result = '';
+        for ( var i = 0; i < length; i++ ) {
+            result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
+        }
+        return result;
     }
   },
   async asyncData({ $axios }) {
@@ -573,6 +583,8 @@ export default {
   },
   created() {
     this.loadTheme() //loads a Theme if present in localStorage
+    this.section.name = generateName()
+    this.setClassPreset()
   }
 };
 </script>
