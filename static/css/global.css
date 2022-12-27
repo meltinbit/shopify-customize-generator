@@ -1,5 +1,5 @@
 :root {
-  /* 
+  
 	--text-color: #aaa;
 	--body-bg: #0C1115;
   --background: #0A1D26;
@@ -8,15 +8,15 @@
 	--list-background: #2B3A41;
 	--drag-background: #253e42;
 	--source-background:#000000; 
-	*/
-	--text-color: #aaa;
+	
+	/* --text-color: #aaa;
 	--body-bg: #170C1E;
   --background: #462A52;
   --border: #170C1E;
   --input-background: #341E3E;
 	--list-background: #25162D;
 	--drag-background: #341E3E;
-	--source-background:#000000;
+	--source-background:#000000; */
 }
 
 body {
@@ -123,6 +123,6 @@ select:focus {
 .btn-secondary.disabled, .btn-secondary:disabled {
   color: var(--text-color);
   background-color: none;
-  border-color: var(--text-color);
+  border-color: none;
   fill: var(--text-color);
 }

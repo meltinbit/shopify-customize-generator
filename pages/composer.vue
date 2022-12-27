@@ -479,7 +479,6 @@ export default {
       this.loadSchema = ''
     },
     log(evt) {
-      console.log(evt)
       let x = 0
       this.section.settings.forEach( (setting, index) => {
         if(setting.type != 'header' && setting.type != 'paragraph') {
@@ -583,7 +582,7 @@ export default {
     }
   },
   created() {
-    this.loadTheme() //loads a Theme if present in localStorage
+    //this.loadTheme() //loads a Theme if present in localStorage
     this.section.name = generateName()
     this.setClassPreset()
   }
