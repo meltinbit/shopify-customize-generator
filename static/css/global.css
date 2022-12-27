@@ -1,23 +1,37 @@
 :root {
-  --body-bg: #0C1115;
-  --text: #aaa;
-  --background: #0A1D26; /*#143A48*/
+  /* 
+	--text-color: #aaa;
+	--body-bg: #0C1115;
+  --background: #0A1D26;
   --border: #16262E;
-  --input-background: #2B3A41;
+  --input-background: #2B3A41; 
+	--list-background: #2B3A41;
+	--drag-background: #253e42;
+	--source-background:#000000; 
+	*/
+	--text-color: #aaa;
+	--body-bg: #170C1E;
+  --background: #462A52;
+  --border: #170C1E;
+  --input-background: #341E3E;
+	--list-background: #25162D;
+	--drag-background: #341E3E;
+	--source-background:#000000;
 }
 
 body {
   background-color: var(--body-bg);
   font-family: 'Helvetica Neue';
-  color: var(--text);
+  color: var(--text-color);
   padding: 1rem;
+	padding-top: 0;
   font-weight: 400;
 }
 
 a:link,
 a:visited,
 svg {
-  color: var(--text);
+  color: var(--text-color);
 }
 
 ul {
@@ -32,7 +46,7 @@ ul > li {
   padding: .5rem 1.4rem;
   border-radius: 25px;
   font-size: .9rem;
-  color: var(--text);
+  color: var(--text-color);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -49,7 +63,7 @@ input[type=number]:focus,
 select,
 select:focus {
   background-color: var(--input-background);
-  color: white;
+  color: var(--text-color);
   font-size: .9rem;
 }
 
@@ -95,20 +109,20 @@ select:focus {
 }
 
 .form-control {
-  color: white;
+  color: var(--text-color);
   background-color: var(--input-background);
   border:1px solid var(--border);
 }
 
 .btn-secondary {
-  color: white;
+  color: var(--text-color);
   background-color: var(--background);
   border-color: var(--border);
 }
 
 .btn-secondary.disabled, .btn-secondary:disabled {
-  color: white;
+  color: var(--text-color);
   background-color: none;
-  border-color: #ccc;
-  fill: white;
+  border-color: var(--text-color);
+  fill: var(--text-color);
 }

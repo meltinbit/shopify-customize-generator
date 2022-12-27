@@ -2,7 +2,7 @@
   <nav v-if="$auth.$state.loggedIn" class="navbar">
     <ul>
       <li><NuxtLink to="/">Home</NuxtLink></li>
-      <li><NuxtLink to="/compact">Composer</NuxtLink></li>
+      <li><NuxtLink to="/composer">Composer</NuxtLink></li>
     </ul>
     <ul>
       <li><User /></li>
@@ -19,9 +19,12 @@
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
-  background-color: #0A1D26;
+  background-color: var(--background);
   margin-bottom: 1rem;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid var(--border);
+	border-bottom-left-radius: 50px;
+	border-bottom-right-radius: 50px;
+
 }
 
 ul {

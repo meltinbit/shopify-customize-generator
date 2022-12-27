@@ -7,7 +7,7 @@ const HEADERS = {
   common: {
     'X-Shopify-Access-Token': process.env.SHOPIFY_API_SECRET
   }
-  }
+}
 
 app.use(bodyParser.json())
 

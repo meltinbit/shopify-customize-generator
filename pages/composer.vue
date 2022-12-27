@@ -25,8 +25,8 @@
         <div class="card-header d-flex justify-content-between align-items-start">
           <strong><b-icon-grid1x2-fill></b-icon-grid1x2-fill>&nbsp;Section</strong>
           <div>
-            <a href="#"><b-icon-folder-fill v-b-modal.load-modal title="paste Section JSON schema"></b-icon-folder-fill></a>
-            <a href="#"><b-icon-trash-fill @click="sectionReset()" title="reset Section"></b-icon-trash-fill></a>
+            <!-- <a href="#"><b-icon-arrow-bar-up v-b-modal.load-modal title="paste an existing Section JSON schema"></b-icon-arrow-bar-up></a> -->
+            <a href="#"><b-icon-arrow-counterclockwise @click="sectionReset()" title="reset Section"></b-icon-arrow-counterclockwise></a>
           </div>
         </div>
         <div class="card-body">
@@ -78,10 +78,10 @@
           <div class="card card-elements">
             <div class="card-header d-flex justify-content-between align-items-start">
               <span><b-icon-grid3x3-gap-fill></b-icon-grid3x3-gap-fill>&nbsp;<strong>Blocks ({{section.blocks.length}})</strong></span>
-              <a href="#" @click="addBlock()" class=""><b-icon-plus font-scale="1.5"></b-icon-plus></a>
+              <a href="#" title="add a Block" @click="addBlock()" class=""><b-icon-plus font-scale="1.5"></b-icon-plus></a>
             </div>
             <div class="card-body blocks">
-              <p class="info" v-if="!section.blocks.length">Create your first Block</p>
+              <p class="info" v-if="!section.blocks.length">Still no Blocks, create your first Block clicking on plus icon.</p>
               <draggable
                 :list="section.blocks"
                 class="list-group"
@@ -350,7 +350,7 @@
         </div>
       </section>
 
-      <section class="theme-browser">
+      <!-- <section class="theme-browser">
         <div class="card">
           <div class="card-header">
             <span><b-icon-hdd-network-fill></b-icon-hdd-network-fill>&nbsp;Theme Browser</span>
@@ -373,7 +373,7 @@
           
           </div>
         </div>
-      </section>
+      </section> -->
 
       <!-- SOURCE CODE -->
       <a href="#" title="view source code" @click="toggleSource" class="displaySource"><b-icon-code-slash></b-icon-code-slash></a>
@@ -383,10 +383,10 @@
           <a href="#" @click="toggleSource()" class="text-white"><b-icon-x font-scale="1.5"></b-icon-x></a>
         </div>
         <div class="card-body">
-          <div class="d-flex align-items-center justify-content-center mb-3">
+          <!-- <div class="d-flex align-items-center justify-content-center mb-3">
             <input v-model="sectionName" type="text" placeholder="choose a filename" class="form-control form-control-sm mr-2">
             <button @click="sectionSave()" :disabled="!sectionName" class="btn btn-secondary btn-sm" title="upload Section"><b-icon-cloud-upload-fill></b-icon-cloud-upload-fill></button>
-          </div>
+          </div> -->
           
           <pre><code v-if="section" class="text-white">{{ section }}</code></pre>
         </div>
@@ -394,8 +394,9 @@
   </div>
 
   <b-modal id="load-modal" title="Load Section Schema">
+		<p>If you want to load an existing Section schema in the Composer to modify it. Copy and paste the code here.</p>
     <textarea v-model="loadSchema" autofocus class="form-control" style="min-height: 400px"></textarea>
-    <b-button class="mt-3" variant="outline-danger" block @click="load()">LOAD</b-button>
+    <b-button class="mt-3" variant="outline-danger" block @click="load()" :disabled="!loadSchema.length">LOAD</b-button>
   </b-modal>
 
   </div>
@@ -405,7 +406,7 @@
 import draggable from "vuedraggable";
 import axios from 'axios'
 import sectionSchema from '~/static/structures/section-schema.json'
-import blockSchema from '~/static/structures/section-schema.json'
+import blockSchema from '~/static/structures/block-schema.json'
 import allElements from '~/static/structures/all-elements.js'
 import generateName  from '~/utils/random-name-generator.js'
 
@@ -591,7 +592,8 @@ export default {
 <style scoped>
 .wrapper {
   display: grid;
-  grid-template-columns: 15vw 1fr 20vw 20vw;
+  /* grid-template-columns: 15vw 1fr 20vw 20vw; */
+	grid-template-columns: 15vw 1fr 30vw;
   grid-gap: .5rem;
 }
 
@@ -619,6 +621,10 @@ main {
   border-radius: 0;
 }
 
+.card-body {
+	background-color: var(--body-bg);
+}
+
 .list-group-item {
   z-index: 1;
 }
@@ -635,22 +641,22 @@ main {
   transform: translate(-50%, -50%);
   text-align: center;
   font-size: .9rem;
-  color: #ccc;
+  color: var(--text-color);
   margin: 0;
   padding: .7rem 0;
   width: 90%;
-  border: 2px dashed #ccc;
+  border: 2px dashed var(--text-color);
   border-radius: .4rem;
-  background-color: #253e42;
+  background-color: var(--drag-background);
   z-index: 0;
 }
 
 .list-group-item,
 .customize-element {
-  background-color: #2B3A41;
-  border: 2px solid #2B3A41;
+  background-color: var(--list-background);
+  border: 2px solid var(--list-background);
   border-radius: 5rem;
-  color: white;
+  color: var(--text-color);
   margin-bottom: .5rem;
 }
 
@@ -663,7 +669,7 @@ main {
   position: fixed;
   bottom: 0;
   right: 0;
-  background-color:#000;
+  background-color: var(--source-background);
   width: 50px;
   height: 50px;
   display: flex;
@@ -673,7 +679,7 @@ main {
 }
 
 .displaySource > svg {
-  fill: #fff;
+  fill: var(--text-color);
 }
 
 .source-code {
@@ -684,6 +690,7 @@ main {
   min-width: 20vw;
   height: 100vh;
   overflow-y: scroll;
+	border-left: 1px solid var(--input-background);
 }
 
 .source-code > .card-header {
@@ -698,8 +705,6 @@ main {
 .info {
   text-align: center;
   font-size: .9rem;
-  color: #ccc;
+  color: var(--text-color);
 }
-
-
 </style>
